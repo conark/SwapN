@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "899236342156",
+    "project_id": "swapn-411915",
+    "storage_bucket": "swapn-411915.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:899236342156:android:6d004b9cda888775f28ea9",
+        "android_client_info": {
+          "package_name": "com.example.kleine"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "899236342156-tuo7d6f40d83622kcrv5rn7cdsa734a5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAD2UFSbrOFbtr7frP6dEKRB8EnUcnLtqw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "899236342156-tuo7d6f40d83622kcrv5rn7cdsa734a5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
