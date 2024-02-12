@@ -112,6 +112,8 @@ class HomeProductsFragment : Fragment() {
                     hideTopScreenProgressbar()
                     return@Observer
                 }
+
+
             }
         })
     }
@@ -238,6 +240,8 @@ class HomeProductsFragment : Fragment() {
                     Log.e(TAG, response.message.toString())
                     return@Observer
                 }
+
+
             }
         })
     }
