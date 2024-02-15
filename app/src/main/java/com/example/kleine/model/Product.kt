@@ -9,7 +9,7 @@ import kotlin.collections.HashMap
 
 @Parcelize
 data class Product(
-    val id :Int,
+    val id :String?,
     val title: String? = "",
     val description: String? = "",
     val category: String? = "",
@@ -27,7 +27,7 @@ data class Product(
 ) : Parcelable
     {
     constructor(
-         id :Int,
+         id :String?,
          title: String? = "",
          description: String? = "",
          category: String? = "",
@@ -38,5 +38,5 @@ data class Product(
          sizes: HashMap<String, Any>
     ) : this(id,title,description,category,null,price,seller, images, colors, sizes,0,null,null)
 
-    constructor():this(0,"","","","",null,null,null)
+    constructor():this("","","","","",null,null,null)
 }
