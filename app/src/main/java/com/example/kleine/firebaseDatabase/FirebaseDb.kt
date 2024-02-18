@@ -39,7 +39,6 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import kotlin.random.Random
 
-class FirebaseDb {
     private val usersCollectionRef = Firebase.firestore.collection(USERS_COLLECTION)
     private val productsCollection = Firebase.firestore.collection(PRODUCTS_COLLECTION)
     private val categoriesCollection = Firebase.firestore.collection(CATEGORIES_COLLECTION)
@@ -396,4 +395,4 @@ class FirebaseDb {
 
 
     fun logout() = Firebase.auth.signOut()
-}
+

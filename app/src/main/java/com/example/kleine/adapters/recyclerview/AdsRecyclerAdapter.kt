@@ -40,7 +40,9 @@ class AdsRecyclerAdapter : RecyclerView.Adapter<AdsRecyclerAdapter.AdsViewHolder
     override fun onBindViewHolder(holder: AdsViewHolder, position: Int) {
         val product = differ.currentList[position]
         val images = product.images
-        val image = (images!![IMAGES] as List<String>)[0]
+ //       val image = (images!![IMAGES] as List<String>)[0]
+        val image = (images!![0] as List<String>)[0]
+
 
         holder.binding.apply {
             Glide.with(holder.itemView).load(image).into(imgAd)
@@ -68,3 +70,9 @@ class AdsRecyclerAdapter : RecyclerView.Adapter<AdsRecyclerAdapter.AdsViewHolder
     var onAddToCartClick: ((Product) -> Unit)? = null
 
 }
+
+
+
+
+
+

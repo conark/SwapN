@@ -156,9 +156,10 @@ class ProductPreviewFragment : Fragment() {
                 }
 
                 val product = args.product
-                val image = (product.images?.get(IMAGES) as List<String>)[0]
+               // val image = (product.images?.get(IMAGES) as List<String>)[0]
+                val image = (product.images?.get(0) as List<String>)[0]
                 val cartProduct = CartProduct(
-                    product.id,
+                    product.id!!,
                     product.title!!,
                     product.seller!!,
                     image,
@@ -182,9 +183,12 @@ class ProductPreviewFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun setProductInformation(product: Product) {
-        val imagesList = product.images!![IMAGES] as List<String>
-        val colors = product.colors!![COLORS] as List<String>
-        val sizes = product.sizes!![SIZES] as List<String>
+        val imagesList = product.images!![0] as List<String>
+        val colors = product.colors!![0] as List<String>
+        val sizes = product.sizes!![0] as List<String>
+//        val imagesList = product.images!![IMAGES] as List<String>
+//        val colors = product.colors!![COLORS] as List<String>
+//        val sizes = product.sizes!![SIZES] as List<String>
         binding.apply {
             viewPagerAdapter.differ.submitList(imagesList)
             if (colors.isNotEmpty() && colors[0] != "")
@@ -231,7 +235,8 @@ class ProductPreviewFragment : Fragment() {
     private fun setupViewpager() {
         binding.viewpager2Images.adapter = viewPagerAdapter
         binding.circleIndicator.setWithViewPager2(binding.viewpager2Images)
-        binding.circleIndicator.itemCount = (args.product.images?.get(IMAGES) as List<String>).size
+//        binding.circleIndicator.itemCount = (args.product.images?.get(IMAGES) as List<String>).size
+        binding.circleIndicator.itemCount = (args.product.images?.get(0) as List<String>).size
         binding.circleIndicator.setAnimationMode(CircleIndicator.AnimationMode.SLIDE)
     }
 

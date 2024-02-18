@@ -42,7 +42,8 @@ class BestDealsRecyclerAdapter :
 
     override fun onBindViewHolder(holder: BestDealsRecyclerAdapterViewHolder, position: Int) {
         val product = differ.currentList[position]
-        val image = (product.images?.get(IMAGES) as List<String>)[0]
+ //       val image = (product.images?.get(IMAGES) as List<String>)[0]
+        val image = (product.images?.get(0) as List<String>)[0]
         holder.binding.apply {
             Glide.with(holder.itemView).load(image).into(imgBestDeal)
             tvDealProductName.text = product.title
@@ -65,3 +66,4 @@ class BestDealsRecyclerAdapter :
 
 
 }
+

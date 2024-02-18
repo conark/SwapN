@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 data class CartProduct (
-    val id:Int,
+    val id:String,
     val name:String,
     val store:String,
     val image:String,
@@ -14,5 +14,5 @@ data class CartProduct (
     val color:String,
     val size:String
         ) {
-    constructor() : this(0,"","","","","",0,"","")
+    constructor() : this("","","","","","",0,"","")
 }

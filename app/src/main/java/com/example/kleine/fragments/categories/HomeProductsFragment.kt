@@ -149,9 +149,10 @@ class HomeProductsFragment : Fragment() {
         }
 
         headerAdapter.onAddToCartClick = { product ->
-            val image = (product.images?.get("images") as List<String>)[0]
+          //  val image = (product.images?.get("images") as List<String>)[0]
+            val image = (product.images?.get(0) as List<String>)[0]
             val cartProduct = CartProduct(
-                product.id,
+                product.id!!,
                 product.title!!,
                 product.seller!!,
                 image,
