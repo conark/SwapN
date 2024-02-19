@@ -7,7 +7,7 @@
 <ImageView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:src="@drawable/secondscreen_background"
+    android:src="@drawable/bg_Screen"
     android:scaleType="centerCrop"/>
 
 
@@ -24,7 +24,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:textSize="@dimen/_15sdp"
-        android:drawableStart="@drawable/ic_kleine_shape"
         android:drawablePadding="@dimen/_5sdp"
         />
 

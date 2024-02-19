@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/secondscreen_background"
+        android:src="@drawable/bg_Screen"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,7 +21,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_90sdp"
-        android:drawableStart="@drawable/ic_kleine_shape"
         android:drawablePadding="@dimen/_5sdp"
         android:fontFamily="@font/poppins_light"
         android:text="@string/g_app_name"
@@ -64,7 +63,7 @@
         android:id="@+id/ed_first_name"
         android:layout_width="0dp"
         android:layout_height="@dimen/_45sdp"
-        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/btn_white_background"
         android:fontFamily="@font/poppins_light"
         android:gravity="center"
@@ -90,6 +89,23 @@
         app:layout_constraintTop_toBottomOf="@id/ed_first_name"
         android:singleLine="true"/>
 
+
+    <EditText
+        android:id="@+id/ed_username"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_45sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@drawable/btn_white_background"
+        android:fontFamily="@font/poppins_light"
+        android:gravity="center"
+        android:hint="@string/g_user_name"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintStart_toStartOf="@id/guideline1"
+        app:layout_constraintTop_toBottomOf="@id/ed_last_name"
+        android:singleLine="true"/>
+
+
     <EditText
         android:id="@+id/ed_email"
         android:layout_width="0dp"
@@ -102,7 +118,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
         app:layout_constraintStart_toStartOf="@id/guideline1"
-        app:layout_constraintTop_toBottomOf="@id/ed_last_name"
+        app:layout_constraintTop_toBottomOf="@id/ed_username"
         android:singleLine="true"/>
 
     <EditText

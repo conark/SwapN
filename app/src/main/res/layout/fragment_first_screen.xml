@@ -3,21 +3,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <ImageView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="@dimen/_7sdp"
-        android:src="@drawable/ic_texture_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:src="@drawable/ic_yeallow_texture"
         app:layout_constraintBottom_toTopOf="@id/guideline2"
-        app:layout_constraintEnd_toStartOf="@id/guideline1"
+        app:layout_constraintEnd_toStartOf="@id/guideline5"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
         android:id="@+id/img_ellipse"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/ellips1_backround"
+        android:layout_height="100dp"
+        android:background="@drawable/ic_switch_accounts"
         app:layout_constraintBottom_toBottomOf="@id/guideline6"
         app:layout_constraintEnd_toStartOf="@id/guideline4"
         app:layout_constraintStart_toStartOf="@id/guideline3"
@@ -41,8 +44,8 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="-55dp"
-        android:src="@drawable/ic_texture_right"
+        android:layout_marginEnd="-300dp"
+        android:src="@drawable/ic_yeallow_texture"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/guideline2" />
 
@@ -78,6 +81,7 @@
         android:id="@+id/tv_right_place"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_12sdp"
         android:fontFamily="@font/poppins_thin"
         android:gravity="center"
         android:text="@string/g_the_right_address"

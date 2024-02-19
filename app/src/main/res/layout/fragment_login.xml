@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="@drawable/secondscreen_background">
+    android:background="@drawable/bg_Screen">
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
@@ -27,7 +27,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="140dp"
-        android:drawableStart="@drawable/ic_kleine_shape"
         android:drawablePadding="@dimen/_5sdp"
         android:fontFamily="@font/poppins_light"
         android:text="@string/g_app_name"

@@ -75,10 +75,25 @@
 
 
         <EditText
-            android:id="@+id/ed_first_name"
+            android:id="@+id/ed_user_name"
             android:layout_width="0dp"
             android:layout_height="@dimen/_45sdp"
             android:layout_marginTop="40dp"
+            android:background="@drawable/btn_white_background"
+            android:fontFamily="@font/poppins_light"
+            android:gravity="center"
+            android:hint="@string/g_user_name"
+            android:singleLine="true"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="@+id/guideline1"
+            app:layout_constraintTop_toBottomOf="@+id/img_user" />
+
+        <EditText
+            android:id="@+id/ed_first_name"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_marginTop="15dp"
             android:background="@drawable/btn_white_background"
             android:fontFamily="@font/poppins_light"
             android:gravity="center"
@@ -87,7 +102,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="@+id/guideline1"
-            app:layout_constraintTop_toBottomOf="@+id/img_user" />
+            app:layout_constraintTop_toBottomOf="@+id/ed_user_name" />
 
         <EditText
             android:id="@+id/ed_last_name"
