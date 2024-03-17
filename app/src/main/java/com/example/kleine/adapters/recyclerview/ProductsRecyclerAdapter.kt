@@ -50,13 +50,16 @@ class ProductsRecyclerAdapter() :
     override fun onBindViewHolder(holder: BestProductsRecyclerAdapterViewHolder, position: Int) {
         val product = differ.currentList[position]
    //     val image = (product.images?.get(IMAGES) as List<String>)[0]
-        val image = (product.images?.get(0) as List<String>)[0]
-        holder.binding.apply {
-            Glide.with(holder.itemView).load(image).into(imgProduct)
-            tvName.text = product.title
-            tvPrice.text = "$${product.price}"
-            tvNewPrice.visibility = View.GONE
+        product.images.getOrNull(0)?.let {
+            val image = it
+            holder.binding.apply {
+                Glide.with(holder.itemView).load(image).into(imgProduct)
+                tvName.text = product.title
+                tvPrice.text = "$${product.price}"
+                tvNewPrice.visibility = View.GONE
+            }
         }
+
 
         product.newPrice?.let {
             if (product.newPrice.isNotEmpty() && product.newPrice != "0") {

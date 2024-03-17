@@ -8,11 +8,11 @@ data class CartProduct (
     val name:String,
     val store:String,
     val image:String,
-    val price:String,
+    val price:Double,
     val newPrice:String?,
     val quantity:Int,
     val color:String,
     val size:String
         ) {
-    constructor() : this("","","","","","",0,"","")
+    constructor() : this("","","","",0.0,"",0,"","")
 }

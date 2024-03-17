@@ -39,6 +39,8 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import kotlin.random.Random
 
+
+class FirebaseDb {
     private val usersCollectionRef = Firebase.firestore.collection(USERS_COLLECTION)
     private val productsCollection = Firebase.firestore.collection(PRODUCTS_COLLECTION)
     private val categoriesCollection = Firebase.firestore.collection(CATEGORIES_COLLECTION)
@@ -58,11 +60,11 @@ import kotlin.random.Random
 
     private val firebaseAuth = Firebase.auth
 
-    fun getProductsByCategory(category: String,page:Long) =
-        productsCollection.whereEqualTo(CATEGORY,category).limit(page).get()
+    fun getProductsByCategory(category: String, page: Long) =
+        productsCollection.whereEqualTo(CATEGORY, category).limit(page).get()
 
 
-    fun getMostRequestedProducts(category: String,page:Long) =
+    fun getMostRequestedProducts(category: String, page: Long) =
         productsCollection.whereEqualTo(CATEGORY, category)
             .orderBy(ORDERS, Query.Direction.DESCENDING).limit(page).get()
 
@@ -390,9 +392,9 @@ import kotlin.random.Random
     fun signInWithGoogle(credential: AuthCredential) =
         FirebaseAuth.getInstance().signInWithCredential(credential)
 
-    fun fetchStore(uid:String) = storesCollection.whereEqualTo("uid",uid).get()
-
+    fun fetchStore(uid: String) = storesCollection.whereEqualTo("uid", uid).get()
 
 
     fun logout() = Firebase.auth.signOut()
 
+}

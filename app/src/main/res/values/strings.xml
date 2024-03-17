@@ -94,6 +94,7 @@
     <string name="g_notifications">Notifications</string>
     <string name="g_regional">Regional</string>
     <string name="g_language">Language</string>
+    <string name="g_add_product" translatable="false">Add Product</string>
     <string name="g_logout">Logout</string>
     <string name="g_billing">Billing And Addresses</string>
     <string name="g_version">Version</string>

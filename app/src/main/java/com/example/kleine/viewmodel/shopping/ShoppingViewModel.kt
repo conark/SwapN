@@ -456,6 +456,12 @@ class ShoppingViewModel(
             .collection("categories")
             .whereEqualTo("name", category).get().addOnSuccessListener {
                 val tempCategory = it.toObjects(Category::class.java)
+                if(tempCategory.isEmpty()){
+                    onSuccess(false).also { Log.d(TAG, "$category is Empty") }
+                    return@addOnSuccessListener
+                }
+
+
                 val products = tempCategory[0].products
                 Log.d("test", " $category : prodcuts ${tempCategory[0].products}, size $listSize")
                 if (listSize == products)

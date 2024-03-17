@@ -3,12 +3,12 @@ package com.example.kleine.fragments.shopping
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.kleine.BuildConfig
@@ -56,12 +56,19 @@ class ProfileFragment : Fragment() {
         onAllOrderClick()
         onTrackOrderClick()
         onLanguageClick()
+        onAddProductClick()
         onHelpClick()
 
         observeProfile()
         binding.tvVersionCode.text =
             "${resources.getText(R.string.g_version)} ${BuildConfig.VERSION_NAME}"
 
+    }
+
+    private fun onAddProductClick() {
+        binding.linearAddProduct.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_addProductFragment)
+        }
     }
 
     private fun onHelpClick() {

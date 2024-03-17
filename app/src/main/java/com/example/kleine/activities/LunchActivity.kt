@@ -1,16 +1,13 @@
 package com.example.kleine.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.kleine.R
 import com.example.kleine.firebaseDatabase.FirebaseDb
 import com.example.kleine.model.Product
-import com.example.kleine.util.Constants.Companion.COLORS
 import com.example.kleine.util.Constants.Companion.FURNITURE_CATEGORY
-import com.example.kleine.util.Constants.Companion.IMAGES
 import com.example.kleine.util.Constants.Companion.PRODUCTS_COLLECTION
-import com.example.kleine.util.Constants.Companion.SIZES
 import com.example.kleine.viewmodel.lunchapp.KleineViewModel
 import com.example.kleine.viewmodel.lunchapp.ViewModelProviderFactory
 import com.google.firebase.firestore.ktx.firestore
@@ -48,9 +45,9 @@ class LunchActivity : AppCompatActivity() {
 
 
             val category = FURNITURE_CATEGORY
-        val price = "300"
-        val newPrice = "229"
-        val seller = "ps mart"
+        val price = 0.0
+        val newPrice = 0.0
+        val seller = true
         val orders = 3
 
    //     val images = HashMap<String,Any>()
@@ -80,8 +77,8 @@ class LunchActivity : AppCompatActivity() {
 //            0xFF8D4E38L
 //        )
 
-        val colors = listOf<Long>(
-            0xFF8D4E38L
+        val colors = listOf<Int>(
+            9109590
         )
  //       colors.put(COLORS, colorsList.toList())
 
