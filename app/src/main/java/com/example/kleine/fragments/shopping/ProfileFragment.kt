@@ -16,6 +16,7 @@ import com.example.kleine.R
 import com.example.kleine.activities.LunchActivity
 import com.example.kleine.activities.ShoppingActivity
 import com.example.kleine.databinding.FragmentProfileBinding
+import com.example.kleine.fragments.settings.AddProductActivity
 import com.example.kleine.model.User
 import com.example.kleine.resource.Resource
 import com.example.kleine.util.Constants.Companion.UPDATE_ADDRESS_FLAG
@@ -67,7 +68,8 @@ class ProfileFragment : Fragment() {
 
     private fun onAddProductClick() {
         binding.linearAddProduct.setOnClickListener {
-            findNavController().navigate(R.id.action_profileFragment_to_addProductFragment)
+            val intent = Intent(requireActivity(), AddProductActivity::class.java)
+            startActivity(intent)
         }
     }
 

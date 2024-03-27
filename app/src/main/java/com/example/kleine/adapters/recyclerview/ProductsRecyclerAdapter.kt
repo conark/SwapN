@@ -1,19 +1,15 @@
 package com.example.kleine.adapters.recyclerview
 
 import android.annotation.SuppressLint
-import android.graphics.Paint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.marginStart
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.kleine.databinding.ProductItemBinding
 import com.example.kleine.model.Product
-import com.example.kleine.util.Constants.Companion.IMAGES
 
 class ProductsRecyclerAdapter() :
     RecyclerView.Adapter<ProductsRecyclerAdapter.BestProductsRecyclerAdapterViewHolder>() {
@@ -61,15 +57,15 @@ class ProductsRecyclerAdapter() :
         }
 
 
-        product.newPrice?.let {
-            if (product.newPrice.isNotEmpty() && product.newPrice != "0") {
-                holder.binding.apply {
-                    tvPrice.paintFlags = tvPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-                    tvNewPrice.text = "$${product.newPrice}"
-                    tvNewPrice.visibility = View.VISIBLE
-                }
-            }
-        }
+//        product.newPrice?.let {
+//            if (product.newPrice.isNotEmpty() && product.newPrice != "0") {
+//                holder.binding.apply {
+//                    tvPrice.paintFlags = tvPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+//                    tvNewPrice.text = "$${product.newPrice}"
+//                    tvNewPrice.visibility = View.VISIBLE
+//                }
+//            }
+//        }
 
         holder.itemView.setOnClickListener {
             onItemClick?.invoke(differ.currentList[position])

@@ -1,14 +1,13 @@
 package com.example.kleine.fragments.shopping
 
 import android.annotation.SuppressLint
-import android.graphics.Paint
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,11 +20,7 @@ import com.example.kleine.databinding.FragmentProductPreviewBinding
 import com.example.kleine.model.CartProduct
 import com.example.kleine.model.Product
 import com.example.kleine.resource.Resource
-import com.example.kleine.util.Constants.Companion.COLORS
 import com.example.kleine.util.Constants.Companion.COLORS_TYPE
-import com.example.kleine.util.Constants.Companion.IMAGES
-import com.example.kleine.util.Constants.Companion.PRODUCT_FLAG
-import com.example.kleine.util.Constants.Companion.SIZES
 import com.example.kleine.util.Constants.Companion.SIZES_TYPE
 import com.example.kleine.viewmodel.shopping.ShoppingViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -159,15 +154,16 @@ class ProductPreviewFragment : Fragment() {
                // val image = (product.images?.get(IMAGES) as List<String>)[0]
                 val image = (product.images?.get(0) as List<String>)[0]
                 val cartProduct = CartProduct(
-                    product.id!!,
-                    product.title!!,
-                    product.seller!!,
-                    image,
-                    product.price!!,
-                    product.newPrice,
-                    1,
-                    selectedColor,
-                    selectedSize
+                    id= product.id!!,
+                    name = product.title!!,
+                    store="",
+                    image=image,
+                    price=product.price!!,
+              //      product.newPrice,
+                    newPrice = null,
+                    quantity=1,
+                    color=selectedColor,
+                    size=selectedSize
                 )
                 viewModel.addProductToCart(cartProduct)
                 setBackgroundResource(R.color.g_black)
@@ -199,14 +195,14 @@ class ProductPreviewFragment : Fragment() {
             tvProductDescription.text = product.description
             tvProductPrice.text = "$${product.price}"
             tvProductOfferPrice.visibility = View.GONE
-            product.newPrice?.let {
-                if (product.newPrice.isNotEmpty() && product.newPrice != "0") {
-                    tvProductPrice.paintFlags =
-                        tvProductPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-                    tvProductOfferPrice.text = "$${product.newPrice}"
-                    tvProductOfferPrice.visibility = View.VISIBLE
-                }
-            }
+//            product.newPrice?.let {
+//                if (product.newPrice.isNotEmpty() && product.newPrice != "0") {
+//                    tvProductPrice.paintFlags =
+//                        tvProductPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+//                    tvProductOfferPrice.text = "$${product.newPrice}"
+//                    tvProductOfferPrice.visibility = View.VISIBLE
+//                }
+//            }
             product.sizeUnit?.let {
                 if (it.isNotEmpty()) {
                     binding.tvSizeUnit.visibility = View.VISIBLE

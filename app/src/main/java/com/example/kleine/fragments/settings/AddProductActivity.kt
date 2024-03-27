@@ -1,10 +1,10 @@
 package com.example.kleine.fragments.settings
 
+
 import android.content.Intent
 import android.content.Intent.ACTION_GET_CONTENT
 import android.graphics.Bitmap
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -13,17 +13,14 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.kleine.R
-
 import com.example.kleine.databinding.ActivityAddproductBinding
 import com.example.kleine.model.Product
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.storage
-
-
 import com.skydoves.colorpickerview.ColorEnvelope
 import com.skydoves.colorpickerview.ColorPickerDialog
 import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener
@@ -33,10 +30,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
-import java.lang.Exception
 import java.util.UUID
 
-class AddProductFragment :  AppCompatActivity() {
+class AddProductActivity :  AppCompatActivity() {
 
     private val binding by lazy { ActivityAddproductBinding.inflate(layoutInflater) }
     private var selectedImages = mutableListOf<Uri>()
@@ -169,9 +165,9 @@ class AddProductFragment :  AppCompatActivity() {
                 if (description.isEmpty()) null else description,
                 category,
                 price.toDouble(),
+                images,
                 if (selectedColors.isEmpty()) null else selectedColors,
                 sizes,
-                images
 
             )
             firestore.collection("products").add(product).addOnSuccessListener {

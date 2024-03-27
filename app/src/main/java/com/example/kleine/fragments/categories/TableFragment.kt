@@ -5,11 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,13 +16,10 @@ import com.example.kleine.R
 import com.example.kleine.SpacingDecorator.HorizantalSpacingItemDecorator
 import com.example.kleine.activities.ShoppingActivity
 import com.example.kleine.adapters.recyclerview.ProductsRecyclerAdapter
-import com.example.kleine.databinding.FragmentChairBinding
 import com.example.kleine.databinding.FragmentTableBinding
-import com.example.kleine.firebaseDatabase.FirebaseDb
 import com.example.kleine.resource.Resource
 import com.example.kleine.util.Constants
 import com.example.kleine.viewmodel.shopping.ShoppingViewModel
-import com.example.kleine.viewmodel.shopping.ShoppingViewModelProviderFactory
 
 class TableFragment : Fragment(R.layout.fragment_table) {
     val TAG = "TableFragment"
@@ -69,7 +64,7 @@ class TableFragment : Fragment(R.layout.fragment_table) {
             val bundle = Bundle()
             bundle.putParcelable("product",product)
             bundle.putString("flag", Constants.PRODUCT_FLAG)
-            Log.d("test",product.newPrice!!)
+  //          Log.d("test",product.newPrice!!)
 
             findNavController().navigate(R.id.action_homeFragment_to_productPreviewFragment2,bundle)
         }

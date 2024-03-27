@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.kleine.databinding.BestDealItemBinding
 import com.example.kleine.model.Product
-import com.example.kleine.util.Constants.Companion.IMAGES
 
 class BestDealsRecyclerAdapter :
     RecyclerView.Adapter<BestDealsRecyclerAdapter.BestDealsRecyclerAdapterViewHolder>() {
@@ -47,7 +46,7 @@ class BestDealsRecyclerAdapter :
         holder.binding.apply {
             Glide.with(holder.itemView).load(image).into(imgBestDeal)
             tvDealProductName.text = product.title
-            tvNewPrice.text = "$${product.newPrice}"
+       //     tvNewPrice.text = "$${product.newPrice}"
             tvOldPrice.text = "$${product.price}"
             tvOldPrice.paintFlags = tvOldPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
         }

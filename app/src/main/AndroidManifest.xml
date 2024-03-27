@@ -28,9 +28,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".activities.StoreActivity"
+        <activity android:name=".fragments.settings.AddProductActivity"
             android:exported="true" />
+
+<!--        <activity android:name=".activities.StoreActivity"-->
+<!--            android:exported="true" />-->
     </application>
 
 </manifest>

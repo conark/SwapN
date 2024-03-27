@@ -3,15 +3,15 @@ package com.example.kleine.fragments.shopping
 import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,13 +33,16 @@ class BillingFragment : Fragment() {
     val TAG = "BillingFragment"
     private lateinit var binding: FragmentBillingBinding
     private lateinit var shippingAddressesAdapter: ShippingAddressesAdapter
-    private lateinit var viewModel: BillingViewModel
+    //private lateinit var viewModel: BillingViewModel
+    private val viewModel: BillingViewModel by viewModels()
     private lateinit var cartProductsAdapter:BillingProductsAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this)[BillingViewModel::class.java]
+
+     //   viewModel = ViewModelProviders.of(this)[BillingViewModel::class.java]
     }
 
     override fun onCreateView(

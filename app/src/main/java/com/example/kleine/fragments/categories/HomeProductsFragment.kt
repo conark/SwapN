@@ -152,15 +152,16 @@ class HomeProductsFragment : Fragment() {
           //  val image = (product.images?.get("images") as List<String>)[0]
             val image = (product.images?.get(0) as List<String>)[0]
             val cartProduct = CartProduct(
-                product.id!!,
-                product.title!!,
-                product.seller!!,
-                image,
-                product.price!!,
-                product.newPrice,
-                1,
-                "",
-                ""
+                id= product.id!!,
+                name = product.title!!,
+                store="",
+                image=image,
+                price=product.price!!,
+  //              product.newPrice,
+                newPrice= null,
+                quantity=1,
+                color="",
+                size=""
             )
             viewModel.addProductToCart(cartProduct)
         }

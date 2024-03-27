@@ -1,8 +1,5 @@
 package com.example.kleine.model
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-
 data class CartProduct (
     val id:String,
     val name:String,
@@ -13,6 +10,7 @@ data class CartProduct (
     val quantity:Int,
     val color:String,
     val size:String
-        ) {
-    constructor() : this("","","","",0.0,"",0,"","")
-}
+        )
+//{
+//    constructor() : this("","","","",0.0,"",0,"","")
+//}
