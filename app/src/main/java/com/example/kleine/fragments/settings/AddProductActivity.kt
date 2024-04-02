@@ -43,6 +43,8 @@ class AddProductActivity :  AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        setSupportActionBar(binding.toolbar)
+
 
         binding.buttonColorPicker.setOnClickListener {
             ColorPickerDialog.Builder (this)
@@ -114,13 +116,21 @@ class AddProductActivity :  AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId ==  R.id.saveProduct){
-            val productValidation = validateInformation ()
-            if (!productValidation){
-                Toast.makeText (this,"Check your inputs", Toast.LENGTH_SHORT).show()
-                return false
+        when (item.itemId) {
+            R.id.back -> {
+                onBackPressed() // 前の画面
+                return true
             }
-            saveProduct ()
+
+            R.id.saveProduct -> {
+                val productValidation = validateInformation()
+                if (!productValidation) {
+                    Toast.makeText(this, "Check your inputs", Toast.LENGTH_SHORT).show()
+                    return false
+                }
+                saveProduct()
+                return true
+            }
         }
         return super.onOptionsItemSelected(item)
     }

@@ -2,9 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item android:id="@+id/back"
+        android:icon="@drawable/ic_arrow_back"
+        app:showAsAction="always"
+        android:title="Add product"
+        android:iconTint="@color/white"/>
+
     <item android:id="@+id/saveProduct"
         android:icon="@drawable/ic_save"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         android:title="Add product"
         android:iconTint="@color/white"/>
 </menu>
