@@ -130,6 +130,7 @@ class AddProductActivity :  AppCompatActivity() {
                 }
                 saveProduct()
                 return true
+
             }
         }
         return super.onOptionsItemSelected(item)

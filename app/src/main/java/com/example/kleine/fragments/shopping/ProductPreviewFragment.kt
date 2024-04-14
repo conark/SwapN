@@ -179,21 +179,27 @@ class ProductPreviewFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun setProductInformation(product: Product) {
-        val imagesList = product.images!![0] as List<String>
-        val colors = product.colors!![0] as List<String>
+        val imagesList = product.images
+      // val imagesList = product.images!![0] as List<String>
+      //  val colors = product.colors!![0] as List<String>
+      //  val colors = listOf(product.colors!![0].toString())
+
+        val colors = product.colors ?: listOf()
         val sizes = product.sizes!![0] as List<String>
 //        val imagesList = product.images!![IMAGES] as List<String>
 //        val colors = product.colors!![COLORS] as List<String>
 //        val sizes = product.sizes!![SIZES] as List<String>
         binding.apply {
             viewPagerAdapter.differ.submitList(imagesList)
-            if (colors.isNotEmpty() && colors[0] != "")
-                colorsAdapter.differ.submitList(colors.toList())
+//            if (colors.isNotEmpty() && colors[0] != "")
+//                colorsAdapter.differ.submitList(colors?.toList())
+            if (colors != null && colors.isNotEmpty())
+                colorsAdapter.differ.submitList(colors)
             if (sizes.isNotEmpty() && sizes[0] != "")
                 sizesAdapter.differ.submitList(sizes)
             tvProductName.text = product.title
             tvProductDescription.text = product.description
-            tvProductPrice.text = "$${product.price}"
+            tvProductPrice.text = "€${product.price}"
             tvProductOfferPrice.visibility = View.GONE
 //            product.newPrice?.let {
 //                if (product.newPrice.isNotEmpty() && product.newPrice != "0") {
@@ -232,7 +238,8 @@ class ProductPreviewFragment : Fragment() {
         binding.viewpager2Images.adapter = viewPagerAdapter
         binding.circleIndicator.setWithViewPager2(binding.viewpager2Images)
 //        binding.circleIndicator.itemCount = (args.product.images?.get(IMAGES) as List<String>).size
-        binding.circleIndicator.itemCount = (args.product.images?.get(0) as List<String>).size
+        //binding.circleIndicator.itemCount = (args.product.images?.get(0) as List<String>).size
+        binding.circleIndicator.itemCount = args.product.images.size
         binding.circleIndicator.setAnimationMode(CircleIndicator.AnimationMode.SLIDE)
     }
 

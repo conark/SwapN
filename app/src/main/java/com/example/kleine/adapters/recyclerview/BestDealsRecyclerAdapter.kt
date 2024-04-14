@@ -47,7 +47,7 @@ class BestDealsRecyclerAdapter :
             Glide.with(holder.itemView).load(image).into(imgBestDeal)
             tvDealProductName.text = product.title
        //     tvNewPrice.text = "$${product.newPrice}"
-            tvOldPrice.text = "$${product.price}"
+            tvOldPrice.text = "€${product.price}"
             tvOldPrice.paintFlags = tvOldPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
         }
 
