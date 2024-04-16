@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.kleine.R
 import com.example.kleine.databinding.CartItemBinding
 import com.example.kleine.model.CartProduct
 
@@ -61,12 +60,12 @@ class BillingProductsAdapter(): RecyclerView.Adapter<BillingProductsAdapter.Bill
             imgCartProduct.scaleType = ImageView.ScaleType.FIT_CENTER
             Glide.with(holder.itemView).load(product.image).into(imgCartProduct)
             tvCartProductName.text = product.name
-            tvProductCartPrice.text = "$ ${product.price}"
+            tvProductCartPrice.text = "€ ${product.price}"
 
             if (product.newPrice != null && product.newPrice.isNotEmpty()) {
-                tvProductCartPrice.text = "$${product.newPrice}"
+                tvProductCartPrice.text = "€${product.newPrice}"
             } else
-                tvProductCartPrice.text = "$${product.price}"
+                tvProductCartPrice.text = "€${product.price}"
         }
 
 

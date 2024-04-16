@@ -32,9 +32,17 @@
         android:drawablePadding="10dp"
         />
 
+        <Spinner
+            android:id="@+id/priceRangeSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="@id/guideline2"
+            app:layout_constraintStart_toStartOf="@id/guideline1"
+            app:layout_constraintTop_toBottomOf="@id/ed_search" />
 
     <FrameLayout
-        android:id="@+id/frame_scan"
+        android:id="@+id/frame_filter"
         android:layout_width="0dp"
         android:layout_height="@dimen/_40sdp"
         android:background="@drawable/favorite_background"
@@ -49,11 +57,11 @@
         app:layout_constraintVertical_bias="0.533">
 
         <ImageView
-            android:id="@+id/img_scan"
+            android:id="@+id/img_filter"
             android:layout_width="@dimen/_15sdp"
-            android:layout_height="@dimen/_15sdp"
+            android:layout_height="13dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_scan" />
+            android:src="@drawable/ic_filter" />
     </FrameLayout>
 
     <FrameLayout

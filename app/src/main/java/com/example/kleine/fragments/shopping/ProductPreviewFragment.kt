@@ -180,21 +180,18 @@ class ProductPreviewFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     private fun setProductInformation(product: Product) {
         val imagesList = product.images
-      // val imagesList = product.images!![0] as List<String>
-      //  val colors = product.colors!![0] as List<String>
-      //  val colors = listOf(product.colors!![0].toString())
-
-        val colors = product.colors ?: listOf()
+        val colors = if (product.colors is List<*>) product.colors[0] as? List<String> else null
+        //    val colors = product.colors!![0] as List<String>
         val sizes = product.sizes!![0] as List<String>
-//        val imagesList = product.images!![IMAGES] as List<String>
-//        val colors = product.colors!![COLORS] as List<String>
-//        val sizes = product.sizes!![SIZES] as List<String>
+
         binding.apply {
             viewPagerAdapter.differ.submitList(imagesList)
-//            if (colors.isNotEmpty() && colors[0] != "")
-//                colorsAdapter.differ.submitList(colors?.toList())
-            if (colors != null && colors.isNotEmpty())
-                colorsAdapter.differ.submitList(colors)
+            colors?.let {
+                if (it.isNotEmpty())
+                    colorsAdapter.differ.submitList(it)
+            }
+//            if (colors != null && colors.isNotEmpty())
+//                colorsAdapter.differ.submitList(colors)
             if (sizes.isNotEmpty() && sizes[0] != "")
                 sizesAdapter.differ.submitList(sizes)
             tvProductName.text = product.title

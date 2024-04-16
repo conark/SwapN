@@ -71,9 +71,9 @@ class CartRecyclerAdapter(
             tvQuantity.text = product.quantity.toString()
 
             if (product.newPrice != null && product.newPrice.isNotEmpty() && product.newPrice != "0") {
-                tvProductCartPrice.text = "$${product.newPrice}"
+                tvProductCartPrice.text = "€${product.newPrice}"
             } else
-                tvProductCartPrice.text = "$${product.price}"
+                tvProductCartPrice.text = "€${product.price}"
 
             if (itemFlag != CART_FLAG)
                 holder.binding.apply {

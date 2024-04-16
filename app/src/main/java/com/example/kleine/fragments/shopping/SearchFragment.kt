@@ -7,6 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -24,7 +27,11 @@ import com.example.kleine.resource.Resource
 import com.example.kleine.viewmodel.shopping.ShoppingViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class SearchFragment : Fragment() {
     private val TAG = "SearchFragment"
@@ -44,7 +51,8 @@ class SearchFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
+
     ): View {
         binding = FragmentSearchBinding.inflate(inflater)
         return binding.root
@@ -68,8 +76,8 @@ class SearchFragment : Fragment() {
         onCancelTvClick()
 
         onCategoryClick()
-
-        binding.frameScan.setOnClickListener {
+        setupPriceRangeSpinner()
+        binding.frameFilter.setOnClickListener {
             val snackBar = requireActivity().findViewById<CoordinatorLayout>(R.id.snackBar_coordinator)
             Snackbar.make(snackBar,resources.getText(R.string.g_coming_soon), Snackbar.LENGTH_SHORT).show()
         }
@@ -226,18 +234,18 @@ class SearchFragment : Fragment() {
     private fun showChancelTv() {
         binding.tvCancel.visibility = View.VISIBLE
         binding.imgMic.visibility = View.GONE
-        binding.imgScan.visibility = View.GONE
+        binding.imgFilter.visibility = View.GONE
         binding.fragmeMicrohpone.visibility = View.GONE
-        binding.frameScan.visibility = View.GONE
+        binding.frameFilter.visibility = View.GONE
 
     }
 
     private fun hideCancelTv() {
         binding.tvCancel.visibility = View.GONE
         binding.imgMic.visibility = View.VISIBLE
-        binding.imgScan.visibility = View.VISIBLE
+        binding.imgFilter.visibility = View.VISIBLE
         binding.fragmeMicrohpone.visibility = View.VISIBLE
-        binding.frameScan.visibility = View.VISIBLE
+        binding.frameFilter.visibility = View.VISIBLE
     }
 
     private fun onHomeClick() {
@@ -270,5 +278,37 @@ class SearchFragment : Fragment() {
         val bottomNav = activity?.findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNav?.visibility = View.VISIBLE
     }
+
+
+    private fun setupPriceRangeSpinner() {
+        val priceRangeOptions = arrayOf("0-20", "21-40", "41-60", "61-100", "101-500", "501+")
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, priceRangeOptions)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.priceRangeSpinner.adapter = adapter
+
+        binding.priceRangeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                filterProductsByPriceRange(priceRangeOptions[position])
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                Toast.makeText(requireContext(), "Select range", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun filterProductsByPriceRange(priceRange: String) {
+        val (minPrice, maxPrice) = parsePriceRange(priceRange)
+        viewModel.filterProductsByPrice(minPrice, maxPrice)
+    }
+
+    private fun parsePriceRange(priceRange: String): Pair<Double, Double> {
+        val range = priceRange.split("-")
+        val minPrice = range[0].toDoubleOrNull() ?: 0.0
+        val maxPrice = if (range.size > 1) range[1].toDoubleOrNull() ?: Double.MAX_VALUE else Double.MAX_VALUE
+        return Pair(minPrice, maxPrice)
+    }
+
+
 
 }

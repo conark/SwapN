@@ -51,7 +51,7 @@ class ProductsRecyclerAdapter() :
             holder.binding.apply {
                 Glide.with(holder.itemView).load(image).into(imgProduct)
                 tvName.text = product.title
-                tvPrice.text = "$${product.price}"
+                tvPrice.text = "€${product.price}"
                 tvNewPrice.visibility = View.GONE
             }
         }

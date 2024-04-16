@@ -4,7 +4,12 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.kleine.firebaseDatabase.FirebaseDb
-import com.example.kleine.model.*
+import com.example.kleine.model.Address
+import com.example.kleine.model.CartProduct
+import com.example.kleine.model.Category
+import com.example.kleine.model.Order
+import com.example.kleine.model.Product
+import com.example.kleine.model.User
 import com.example.kleine.resource.Resource
 import com.example.kleine.util.Constants.Companion.ACCESSORY_CATEGORY
 import com.example.kleine.util.Constants.Companion.CHAIR_CATEGORY
@@ -12,7 +17,7 @@ import com.example.kleine.util.Constants.Companion.CUPBOARD_CATEGORY
 import com.example.kleine.util.Constants.Companion.FURNITURE_CATEGORY
 import com.example.kleine.util.Constants.Companion.TABLES_CATEGORY
 import com.google.firebase.firestore.FirebaseFirestore
-import java.util.*
+import java.util.UUID
 
 private const val TAG = "ShoppingViewModel"
 
@@ -697,6 +702,16 @@ class ShoppingViewModel(
         }
 
 
+    }
+
+    fun filterProductsByPrice(minPrice: Double, maxPrice: Double) {
+        val products = home.value?.data ?: return
+        val filteredProducts = products.filter { product ->
+            val price = product.price
+            price in minPrice..maxPrice
+        }
+
+        home.postValue(Resource.Success(filteredProducts))
     }
 
 }

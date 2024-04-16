@@ -255,7 +255,7 @@ class CartFragment : Fragment() {
 
                         }
 
-                        binding.tvTotalprice.text = "$ $totalPrice"
+                        binding.tvTotalprice.text = "€ $totalPrice"
 
                     } else { // cart is empty
                         cartAdapter.differ.submitList(products)
