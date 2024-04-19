@@ -1,19 +1,22 @@
 package com.example.kleine.fragments.shopping
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.example.kleine.R
 import com.example.kleine.activities.ShoppingActivity
 import com.example.kleine.adapters.viewpager.HomeViewpagerAdapter
 import com.example.kleine.databinding.FragmentHomeBinding
-import com.example.kleine.fragments.categories.*
+import com.example.kleine.fragments.categories.AccessoryFragment
+import com.example.kleine.fragments.categories.ChairFragment
+import com.example.kleine.fragments.categories.CupboardFragment
+import com.example.kleine.fragments.categories.FurnitureFragment
 import com.example.kleine.fragments.categories.HomeProductsFragment
+import com.example.kleine.fragments.categories.TableFragment
 import com.example.kleine.viewmodel.shopping.ShoppingViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar

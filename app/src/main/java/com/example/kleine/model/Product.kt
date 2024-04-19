@@ -31,7 +31,7 @@ data class Product(
         price: Double = 0.0,
         images: List<String>,
         colors: List<Int>?,
-        sizes: List<String>,
+        sizes: List<String>?,
     ) : this(id,title,description,category,price,images, colors,
         sizes,0,null,null)
 

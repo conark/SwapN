@@ -183,7 +183,6 @@ class ProductPreviewFragment : Fragment() {
         val colors = if (product.colors is List<*>) product.colors[0] as? List<String> else null
         //    val colors = product.colors!![0] as List<String>
         val sizes = product.sizes!![0] as List<String>
-
         binding.apply {
             viewPagerAdapter.differ.submitList(imagesList)
             colors?.let {
