@@ -32,14 +32,7 @@
         android:drawablePadding="10dp"
         />
 
-        <Spinner
-            android:id="@+id/priceRangeSpinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            app:layout_constraintEnd_toEndOf="@id/guideline2"
-            app:layout_constraintStart_toStartOf="@id/guideline1"
-            app:layout_constraintTop_toBottomOf="@id/ed_search" />
+
 
     <FrameLayout
         android:id="@+id/frame_filter"
@@ -110,7 +103,7 @@
         android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
         app:layout_constraintStart_toStartOf="@id/guideline1"
-        app:layout_constraintTop_toBottomOf="@id/ed_search"
+        app:layout_constraintTop_toBottomOf="@id/priceRangeSpinner"
         />
 
     <TextView
@@ -138,6 +131,14 @@
             android:overScrollMode="never"
 
             />
+        <Spinner
+            android:id="@+id/priceRangeSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="@id/guideline2"
+            app:layout_constraintStart_toStartOf="@id/guideline1"
+            app:layout_constraintTop_toBottomOf="@id/ed_search" />
 
         <ProgressBar
             android:id="@+id/progressbar_categories"

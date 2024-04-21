@@ -711,7 +711,7 @@ class ShoppingViewModel(
             price in minPrice..maxPrice
         }
 
-        home.postValue(Resource.Success(filteredProducts))
+        search.postValue(Resource.Success(filteredProducts))
     }
 
 }

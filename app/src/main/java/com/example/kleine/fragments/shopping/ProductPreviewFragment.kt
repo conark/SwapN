@@ -180,9 +180,11 @@ class ProductPreviewFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     private fun setProductInformation(product: Product) {
         val imagesList = product.images
-        val colors = if (product.colors is List<*>) product.colors[0] as? List<String> else null
+        val colors = product.colors?.map { '#'+Integer.toHexString(it) }
+    //    val colors = emptyList<String>()
         //    val colors = product.colors!![0] as List<String>
-        val sizes = product.sizes!![0] as List<String>
+        val size = product.sizes!![0]
+        val sizes = product.sizes
         binding.apply {
             viewPagerAdapter.differ.submitList(imagesList)
             colors?.let {
