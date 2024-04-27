@@ -12,68 +12,68 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/search_box_background"
+        android:drawableEnd="@drawable/ic_search"
+        android:drawablePadding="10dp"
         android:fontFamily="@font/poppins_thin"
+        android:gravity="center_vertical"
         android:hint="@string/g_search_now"
+        android:padding="10dp"
         android:paddingStart="@dimen/_12sdp"
         android:singleLine="true"
         android:textColor="@color/g_icon_tint"
+        android:textDirection="anyRtl"
         android:textSize="@dimen/_12ssp"
-        android:gravity="center_vertical"
         app:layout_constraintBottom_toBottomOf="@id/guideline4"
-        app:layout_constraintEnd_toEndOf="@id/guideline3"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/guideline1"
         app:layout_constraintTop_toTopOf="@id/guideline5"
-        app:layout_constraintVertical_bias="1.0"
-        android:drawableEnd="@drawable/ic_search"
-        android:padding="10dp"
-        android:drawablePadding="10dp"
-        android:textDirection="anyRtl"/>
+        app:layout_constraintVertical_bias="1.0" />
 
 
-    <FrameLayout
-        android:id="@+id/frame_scan"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:background="@drawable/favorite_background"
-        android:backgroundTint="@color/g_search_and_icons"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@id/guideline4"
-        app:layout_constraintEnd_toEndOf="@id/guideline8"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toTopOf="@id/guideline5"
-        app:layout_constraintVertical_bias="0.533">
+<!--    <FrameLayout-->
+<!--        android:id="@+id/frame_scan"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_marginStart="@dimen/_10sdp"-->
+<!--        android:background="@drawable/favorite_background"-->
+<!--        android:backgroundTint="@color/g_search_and_icons"-->
+<!--        android:orientation="vertical"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/guideline4"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/guideline8"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/guideline3"-->
+<!--        app:layout_constraintTop_toTopOf="@id/guideline5"-->
+<!--        app:layout_constraintVertical_bias="0.533">-->
 
-        <ImageView
-            android:id="@+id/img_scan"
-            android:layout_width="@dimen/_15sdp"
-            android:layout_height="@dimen/_15sdp"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_scan" />
-    </FrameLayout>
+<!--        <ImageView-->
+<!--            android:id="@+id/img_scan"-->
+<!--            android:layout_width="@dimen/_15sdp"-->
+<!--            android:layout_height="@dimen/_15sdp"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:src="@drawable/ic_scan" />-->
+<!--    </FrameLayout>-->
 
-    <FrameLayout
-        android:id="@+id/fragme_microhpone"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/_5sdp"
-        android:background="@drawable/favorite_background"
-        android:backgroundTint="@color/g_search_and_icons"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@id/guideline4"
-        app:layout_constraintEnd_toEndOf="@id/guideline2"
-        app:layout_constraintStart_toEndOf="@id/guideline8"
-        app:layout_constraintTop_toTopOf="@id/guideline5">
+<!--    <FrameLayout-->
+<!--        android:id="@+id/fragme_favorite"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_marginStart="@dimen/_5sdp"-->
+<!--        android:background="@drawable/favorite_background"-->
+<!--        android:backgroundTint="@color/g_search_and_icons"-->
+<!--        android:orientation="vertical"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/guideline4"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/guideline2"-->
+<!--        app:layout_constraintStart_toEndOf="@id/guideline8"-->
+<!--        app:layout_constraintTop_toTopOf="@id/guideline5">-->
 
-        <ImageView
-            android:id="@+id/img_mic"
-            android:layout_width="@dimen/_15sdp"
-            android:layout_height="@dimen/_15sdp"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_microphone" />
+<!--        <ImageView-->
+<!--            android:id="@+id/img_favorite"-->
+<!--            android:layout_width="@dimen/_15sdp"-->
+<!--            android:layout_height="@dimen/_15sdp"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:src="@drawable/ic_favorite_fill" />-->
 
-    </FrameLayout>
+<!--    </FrameLayout>-->
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpager_home"

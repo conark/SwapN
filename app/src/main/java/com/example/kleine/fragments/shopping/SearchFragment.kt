@@ -33,6 +33,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+
+
 class SearchFragment : Fragment() {
     private val TAG = "SearchFragment"
     private lateinit var binding: FragmentSearchBinding
@@ -40,6 +42,7 @@ class SearchFragment : Fragment() {
     private lateinit var viewModel: ShoppingViewModel
     private lateinit var categoriesAdapter: CategoriesRecyclerAdapter
     private lateinit var searchAdapter: SearchRecyclerAdapter
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,10 +81,28 @@ class SearchFragment : Fragment() {
         onCategoryClick()
         setupPriceRangeSpinner()
         binding.frameFilter.setOnClickListener {
-            val snackBar = requireActivity().findViewById<CoordinatorLayout>(R.id.snackBar_coordinator)
-            Snackbar.make(snackBar,resources.getText(R.string.g_coming_soon), Snackbar.LENGTH_SHORT).show()
+
+            // スピナーがクリックされたとき
+            if (binding.priceRangeSpinner.isActivated) {
+                // スピナーが非アクティブ、非表示
+                binding.priceRangeSpinner.isActivated = false
+                binding.priceRangeSpinner.visibility = View.GONE
+                binding.tvPriceRange.visibility = View.GONE
+
+
+
+
+
+            } else {
+                // スピナーがアクティブ、表示
+                binding.priceRangeSpinner.isActivated = true
+                binding.priceRangeSpinner.visibility = View.VISIBLE
+                binding.tvPriceRange.visibility = View.VISIBLE
+
+
+            }
         }
-        binding.fragmeMicrohpone.setOnClickListener {
+        binding.fragmeFavorite.setOnClickListener {
             val snackBar = requireActivity().findViewById<CoordinatorLayout>(R.id.snackBar_coordinator)
             Snackbar.make(snackBar,resources.getText(R.string.g_coming_soon), Snackbar.LENGTH_SHORT).show()
         }
@@ -233,18 +254,18 @@ class SearchFragment : Fragment() {
 
     private fun showChancelTv() {
         binding.tvCancel.visibility = View.VISIBLE
-        binding.imgMic.visibility = View.GONE
+        binding.imgFavorite.visibility = View.GONE
         binding.imgFilter.visibility = View.GONE
-        binding.fragmeMicrohpone.visibility = View.GONE
+        binding.fragmeFavorite.visibility = View.GONE
         binding.frameFilter.visibility = View.GONE
 
     }
 
     private fun hideCancelTv() {
         binding.tvCancel.visibility = View.GONE
-        binding.imgMic.visibility = View.VISIBLE
+        binding.imgFavorite.visibility = View.VISIBLE
         binding.imgFilter.visibility = View.VISIBLE
-        binding.fragmeMicrohpone.visibility = View.VISIBLE
+        binding.fragmeFavorite.visibility = View.VISIBLE
         binding.frameFilter.visibility = View.VISIBLE
     }
 

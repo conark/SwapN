@@ -131,5 +131,6 @@
     <string name="help_text">Got a question? We\'re here to answer!</string>
     <string name="g_user_name">User Name</string>
     <string name="seller">Seller Page</string>
+    <string name="g_pricerange">Price Range</string>
 
 </resources>

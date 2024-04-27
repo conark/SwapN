@@ -58,7 +58,7 @@
     </FrameLayout>
 
     <FrameLayout
-        android:id="@+id/fragme_microhpone"
+        android:id="@+id/fragme_favorite"
         android:layout_width="0dp"
         android:layout_height="@dimen/_40sdp"
         android:layout_marginStart="@dimen/_5sdp"
@@ -71,11 +71,11 @@
         app:layout_constraintTop_toTopOf="@id/ed_search">
 
         <ImageView
-            android:id="@+id/img_mic"
+            android:id="@+id/img_favorite"
             android:layout_width="@dimen/_15sdp"
             android:layout_height="@dimen/_15sdp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_microphone" />
+            android:src="@drawable/ic_favorite_fill" />
 
     </FrameLayout>
 
@@ -106,18 +106,19 @@
         app:layout_constraintTop_toBottomOf="@id/priceRangeSpinner"
         />
 
-    <TextView
-        android:id="@+id/tv_categories"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:fontFamily="@font/poppins_thin"
-        android:gravity="center"
-        android:text="@string/g_categories"
-        android:textColor="@color/g_black"
-        android:textSize="@dimen/_20sdp"
-        app:layout_constraintStart_toStartOf="@id/guideline1"
-        app:layout_constraintTop_toBottomOf="@id/rv_search" />
+        <TextView
+            android:id="@+id/tv_categories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:fontFamily="@font/poppins_thin"
+            android:gravity="center"
+            android:text="@string/g_categories"
+            android:textColor="@color/g_black"
+            android:textSize="@dimen/_20sdp"
+            app:layout_constraintStart_toStartOf="@id/guideline1"
+            app:layout_constraintTop_toBottomOf="@id/rv_search"
+            tools:ignore="TextSizeCheck" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="0dp"
@@ -131,6 +132,9 @@
             android:overScrollMode="never"
 
             />
+
+
+
         <Spinner
             android:id="@+id/priceRangeSpinner"
             android:layout_width="wrap_content"
@@ -138,7 +142,23 @@
             android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="@id/guideline2"
             app:layout_constraintStart_toStartOf="@id/guideline1"
-            app:layout_constraintTop_toBottomOf="@id/ed_search" />
+            app:layout_constraintTop_toBottomOf="@id/ed_search"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tv_priceRange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:fontFamily="@font/poppins_thin"
+            android:gravity="center"
+            android:text="@string/g_pricerange"
+            android:textColor="@color/g_black"
+            android:textSize="@dimen/_10sdp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@id/guideline1"
+            app:layout_constraintTop_toBottomOf="@id/ed_search"
+            tools:ignore="TextSizeCheck" />
 
         <ProgressBar
             android:id="@+id/progressbar_categories"
