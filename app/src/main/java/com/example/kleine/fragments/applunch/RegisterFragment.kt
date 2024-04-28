@@ -2,16 +2,16 @@ package com.example.kleine.fragments.applunch
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import br.com.simplepass.loadingbutton.customViews.CircularProgressButton
-import com.example.kleine.activities.LunchActivity
 import com.example.kleine.R
+import com.example.kleine.activities.LunchActivity
 import com.example.kleine.databinding.FragmentRegisterBinding
 import com.example.kleine.model.User
 import com.example.kleine.resource.Resource
@@ -107,6 +107,7 @@ class RegisterFragment : Fragment() {
 
 
     private fun getUser(): User? {
+        val userName = binding.edUsername.text.toString().trim()
         val firstName = binding.edFirstName.text.toString().trim()
         val lastName = binding.edLastName.text.toString().trim()
         val email = binding.edEmail.text.toString().trim()
@@ -144,7 +145,7 @@ class RegisterFragment : Fragment() {
         }
 
 
-        return User(firstName, lastName, email)
+        return User(userName,firstName, lastName, email)
     }
 
     private fun getPassword(): String? {

@@ -609,10 +609,10 @@ class ShoppingViewModel(
         }
     }
 
-    fun updateInformation(firstName: String, lastName: String, email: String, imageName: String) {
+    fun updateInformation(userName: String,firstName: String, lastName: String, email: String, imageName: String) {
         updateUserInformation.postValue(Resource.Loading())
 
-        firebaseDatabase.getImageUrl(firstName, lastName, email, imageName) { user, exception ->
+        firebaseDatabase.getImageUrl(userName,firstName, lastName, email, imageName) { user, exception ->
 
             if (exception != null)
                 updateUserInformation.postValue(Resource.Error(exception))

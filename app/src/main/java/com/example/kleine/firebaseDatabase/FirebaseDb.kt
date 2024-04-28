@@ -1,19 +1,20 @@
 package com.example.kleine.firebaseDatabase
 
 import android.util.Log
-import com.example.kleine.model.*
+import com.example.kleine.model.Address
+import com.example.kleine.model.CartProduct
+import com.example.kleine.model.Order
+import com.example.kleine.model.User
 import com.example.kleine.util.Constants.Companion.ADDRESS_COLLECTION
 import com.example.kleine.util.Constants.Companion.BEST_DEALS
 import com.example.kleine.util.Constants.Companion.CART_COLLECTION
 import com.example.kleine.util.Constants.Companion.CATEGORIES_COLLECTION
 import com.example.kleine.util.Constants.Companion.CATEGORY
-import com.example.kleine.util.Constants.Companion.CHAIR_CATEGORY
 import com.example.kleine.util.Constants.Companion.CLOTHES
 import com.example.kleine.util.Constants.Companion.COLOR
 import com.example.kleine.util.Constants.Companion.CUPBOARD_CATEGORY
 import com.example.kleine.util.Constants.Companion.ID
 import com.example.kleine.util.Constants.Companion.ORDERS
-import com.example.kleine.util.Constants.Companion.ORDER_CONFIRM_STATE
 import com.example.kleine.util.Constants.Companion.ORDER_PLACED_STATE
 import com.example.kleine.util.Constants.Companion.PRICE
 import com.example.kleine.util.Constants.Companion.PRODUCTS_COLLECTION
@@ -26,18 +27,13 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.Transaction
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import com.google.firebase.storage.ktx.storage
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
-import kotlin.random.Random
+import java.util.Calendar
 
 
 class FirebaseDb {
@@ -287,6 +283,7 @@ class FirebaseDb {
     }
 
     fun getImageUrl(
+        userName: String,
         firstName: String,
         lastName: String,
         email: String,
@@ -299,13 +296,13 @@ class FirebaseDb {
                 .child(imageName).downloadUrl.addOnCompleteListener {
                     if (it.isSuccessful) {
                         val imageUrl = it.result.toString()
-                        val user = User(firstName, lastName, email, imageUrl)
+                        val user = User(userName,firstName, lastName, email, imageUrl)
                         onResult(user, null)
                     } else
                         onResult(null, it.exception.toString())
 
                 } else {
-            val user = User(firstName, lastName, email, "")
+            val user = User(userName,firstName, lastName, email, "")
             onResult(user, null)
         }
     }

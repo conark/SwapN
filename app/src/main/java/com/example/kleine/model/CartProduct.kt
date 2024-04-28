@@ -11,6 +11,6 @@ data class CartProduct (
     val color:String,
     val size:String
         )
-//{
-//    constructor() : this("","","","",0.0,"",0,"","")
-//}
+{
+    constructor() : this("","","","",0.0,"",0,"","")
+}

@@ -152,7 +152,8 @@ class ProductPreviewFragment : Fragment() {
 
                 val product = args.product
                // val image = (product.images?.get(IMAGES) as List<String>)[0]
-                val image = (product.images?.get(0) as List<String>)[0]
+               // val image = (product.images?.get(0) as List<String>)[0]
+                val image = product.images.get(0)
                 val cartProduct = CartProduct(
                     id= product.id!!,
                     name = product.title!!,
