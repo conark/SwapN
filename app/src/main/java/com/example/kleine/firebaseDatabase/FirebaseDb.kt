@@ -164,6 +164,12 @@ class FirebaseDb {
     fun deleteAddress(documentUid: String, address: Address) =
         userAddressesCollection?.document(documentUid)?.delete()
 
+
+//    CartProductリストからstoreを取得
+//    store毎にCartProductをまとめる(storeをキーとしてHashMapを生成)
+//    store毎にオーダーを生成
+//    Firebaseに保存
+
     fun placeOrder(products: List<CartProduct>, address: Address, order: Order) =
         Firebase.firestore.runBatch { batch ->
             //filter every product to its store
@@ -283,7 +289,7 @@ class FirebaseDb {
     }
 
     fun getImageUrl(
-        userName: String,
+        storeName: String,
         firstName: String,
         lastName: String,
         email: String,
@@ -296,13 +302,13 @@ class FirebaseDb {
                 .child(imageName).downloadUrl.addOnCompleteListener {
                     if (it.isSuccessful) {
                         val imageUrl = it.result.toString()
-                        val user = User(userName,firstName, lastName, email, imageUrl)
+                        val user = User(storeName,firstName, lastName, email, imageUrl)
                         onResult(user, null)
                     } else
                         onResult(null, it.exception.toString())
 
                 } else {
-            val user = User(userName,firstName, lastName, email, "")
+            val user = User(storeName,firstName, lastName, email, "")
             onResult(user, null)
         }
     }

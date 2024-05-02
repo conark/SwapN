@@ -18,7 +18,10 @@ import androidx.lifecycle.lifecycleScope
 import com.example.kleine.R
 import com.example.kleine.databinding.ActivityAddproductBinding
 import com.example.kleine.model.Product
+import com.example.kleine.model.User
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.storage
 import com.skydoves.colorpickerview.ColorEnvelope
@@ -31,6 +34,8 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
 import java.util.UUID
+
+
 
 class AddProductActivity :  AppCompatActivity() {
 
@@ -145,6 +150,9 @@ class AddProductActivity :  AppCompatActivity() {
         val sizes = getSizeList (binding.edSizes.text.toString().trim())
         val imagesByteArrays = getImagesByteArrays()
         val images = mutableListOf<String>()
+        val storeName = fetchStoreName()
+
+
 
         lifecycleScope.launch(Dispatchers.IO){
             withContext(Dispatchers.Main){
@@ -160,6 +168,7 @@ class AddProductActivity :  AppCompatActivity() {
                             val result = imageStorage.putBytes(it).await()
                             val downloadUrl = result.storage.downloadUrl.await().toString()
                             images.add(downloadUrl)
+
                         }
                     }
                 }.await()
@@ -179,6 +188,7 @@ class AddProductActivity :  AppCompatActivity() {
                 images,
                 if (selectedColors.isEmpty()) null else selectedColors,
                 sizes,
+                storeName
 
             )
             firestore.collection("products").add(product).addOnSuccessListener {
@@ -234,6 +244,24 @@ class AddProductActivity :  AppCompatActivity() {
         if (selectedImages.isEmpty())
             return false
         return true
+    }
+
+    private suspend fun fetchUser(): User? {
+        return withContext(Dispatchers.IO) {
+            val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid
+            if (currentUserUid != null) {
+                val userDocument = FirebaseFirestore.getInstance().collection("users").document(currentUserUid).get().await()
+                val user = userDocument.toObject(User::class.java)
+                user
+            } else {
+                null
+            }
+        }
+    }
+
+    private suspend fun fetchStoreName(): String? {
+        val user = fetchUser()
+        return user?.storeName
     }
 
 

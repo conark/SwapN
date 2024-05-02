@@ -107,7 +107,7 @@ class RegisterFragment : Fragment() {
 
 
     private fun getUser(): User? {
-        val userName = binding.edUsername.text.toString().trim()
+        val storeName = binding.edStoreName.text.toString().trim()
         val firstName = binding.edFirstName.text.toString().trim()
         val lastName = binding.edLastName.text.toString().trim()
         val email = binding.edEmail.text.toString().trim()
@@ -145,7 +145,7 @@ class RegisterFragment : Fragment() {
         }
 
 
-        return User(userName,firstName, lastName, email)
+        return User(storeName,firstName, lastName, email)
     }
 
     private fun getPassword(): String? {

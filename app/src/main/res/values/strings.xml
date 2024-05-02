@@ -129,7 +129,7 @@
     <string name="pending_orders">Pending Orders</string>
     <string name="help">Help</string>
     <string name="help_text">Got a question? We\'re here to answer!</string>
-    <string name="g_user_name">User Name</string>
+    <string name="g_store_name">Store Name</string>
     <string name="seller">Seller Page</string>
     <string name="g_pricerange">Price Range</string>
 

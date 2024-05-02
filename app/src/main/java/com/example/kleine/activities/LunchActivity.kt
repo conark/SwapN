@@ -89,11 +89,12 @@ class LunchActivity : AppCompatActivity() {
             "1*2",
         )
 
+        val storeName = "Store 1"
+
  //       sizes.put(SIZES,sizesList.toList())
 
 
-      //  val prodcut = Product(null,title, description, category, newPrice,price, seller, imagesList, colorsList, sizesList,orders,null,sizeUnit)
-        val prodcut = Product(null,title, description, category,price,  images, colors, sizes,orders,null)
+        val prodcut = Product(null,title, description, category,price,  images, colors, sizes,storeName,orders,null)
 
         Firebase.firestore.collection(PRODUCTS_COLLECTION)
             .document()
