@@ -107,7 +107,7 @@ class RegisterFragment : Fragment() {
 
 
     private fun getUser(): User? {
-        val storeName = binding.edStoreName.text.toString().trim()
+        val storeName = binding.edUserName.text.toString().trim()
         val firstName = binding.edFirstName.text.toString().trim()
         val lastName = binding.edLastName.text.toString().trim()
         val email = binding.edEmail.text.toString().trim()

@@ -9,6 +9,7 @@ import com.example.kleine.model.CartProduct
 import com.example.kleine.model.Category
 import com.example.kleine.model.Order
 import com.example.kleine.model.Product
+import com.example.kleine.model.Store
 import com.example.kleine.model.User
 import com.example.kleine.resource.Resource
 import com.example.kleine.util.Constants.Companion.ACCESSORY_CATEGORY
@@ -16,6 +17,7 @@ import com.example.kleine.util.Constants.Companion.CHAIR_CATEGORY
 import com.example.kleine.util.Constants.Companion.CUPBOARD_CATEGORY
 import com.example.kleine.util.Constants.Companion.FURNITURE_CATEGORY
 import com.example.kleine.util.Constants.Companion.TABLES_CATEGORY
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.UUID
 
@@ -65,6 +67,8 @@ class ShoppingViewModel(
     val orderProducts = MutableLiveData<Resource<List<CartProduct>>>()
 
     val categories = MutableLiveData<Resource<List<Category>>>()
+
+    val stores = MutableLiveData<Resource<List<Store>>>()
 
 
     val search = MutableLiveData<Resource<List<Product>>>()
@@ -609,10 +613,10 @@ class ShoppingViewModel(
         }
     }
 
-    fun updateInformation(storeName: String,firstName: String, lastName: String, email: String, imageName: String) {
+    fun updateInformation(userName: String,firstName: String, lastName: String, email: String, imageName: String) {
         updateUserInformation.postValue(Resource.Loading())
 
-        firebaseDatabase.getImageUrl(storeName,firstName, lastName, email, imageName) { user, exception ->
+        firebaseDatabase.getImageUrl(userName,firstName, lastName, email, imageName) { user, exception ->
 
             if (exception != null)
                 updateUserInformation.postValue(Resource.Error(exception))
@@ -620,10 +624,39 @@ class ShoppingViewModel(
             else
                 user?.let {
                     onUpdateInformation(user).also { Log.d("test1", "down") }
+                    //userNameがかぶってないか確認し、登録する
+                    checkIfUserNameExistsInStores(userName)
                 }
         }
     }
+    // userNameがStoresのnameに追加されているか確認
+//    fun fetchStores () {
+//        firebaseDatabase.getStores().addOnSuccessListener {
+//            val stores = it.toObjects(Store::class.java)
+//        }
+//    }
+    private fun checkIfUserNameExistsInStores(userName: String) {
+        firebaseDatabase.getStores().addOnSuccessListener { storesSnapshot ->
+            val stores = storesSnapshot.toObjects(Store::class.java)
+            val storeNames = stores.map { it.name }
 
+            if (!storeNames.contains(userName)) {
+                // userNameがStoresのnameに存在しない場合、userNameをStoreに追加する
+                // Firebase Authenticationからユーザーを取得
+                val userid = FirebaseAuth.getInstance().currentUser
+                val uid = userid?.uid?:""
+                firebaseDatabase.addStore(userName, uid).addOnSuccessListener {
+                    updateUserInformation.postValue(Resource.Success(user))
+                }.addOnFailureListener { exception ->
+                    updateUserInformation.postValue(Resource.Error(exception.message))
+                }
+            } else {
+                updateUserInformation.postValue(Resource.Success(user))
+            }
+        }.addOnFailureListener { exception ->
+            updateUserInformation.postValue(Resource.Error(exception.message))
+        }
+    }
     private fun onUpdateInformation(user: User) {
         firebaseDatabase.updateUserInformation(user).addOnCompleteListener {
             if (it.isSuccessful)
@@ -713,5 +746,6 @@ class ShoppingViewModel(
 
         search.postValue(Resource.Success(filteredProducts))
     }
+
 
 }

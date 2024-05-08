@@ -91,7 +91,7 @@
 
 
     <EditText
-        android:id="@+id/ed_store_name"
+        android:id="@+id/ed_user_name"
         android:layout_width="0dp"
         android:layout_height="@dimen/_45sdp"
         android:layout_marginTop="@dimen/_10sdp"
@@ -118,7 +118,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
         app:layout_constraintStart_toStartOf="@id/guideline1"
-        app:layout_constraintTop_toBottomOf="@id/ed_store_name"
+        app:layout_constraintTop_toBottomOf="@id/ed_user_name"
         android:singleLine="true"/>
 
     <EditText

@@ -150,7 +150,7 @@ class AddProductActivity :  AppCompatActivity() {
         val sizes = getSizeList (binding.edSizes.text.toString().trim())
         val imagesByteArrays = getImagesByteArrays()
         val images = mutableListOf<String>()
-        val storeName = fetchStoreName()
+
 
 
 
@@ -178,7 +178,7 @@ class AddProductActivity :  AppCompatActivity() {
                     hideLoading()
                 }
             }
-
+            val userName = fetchUserName()
             val product = Product (
                 UUID.randomUUID().toString(),
                 title,
@@ -188,11 +188,14 @@ class AddProductActivity :  AppCompatActivity() {
                 images,
                 if (selectedColors.isEmpty()) null else selectedColors,
                 sizes,
-                storeName
+                userName
 
             )
             firestore.collection("products").add(product).addOnSuccessListener {
                 hideLoading()
+                //もしProduct追加が成功したら、userNameをStoreNameに登録する。
+//                firestore.collection("stores").add(store)
+                //storeNameがかぶってなかったら登録する
             }.addOnFailureListener{
                 hideLoading()
                 Log.e("Error",it.message.toString())
@@ -259,9 +262,9 @@ class AddProductActivity :  AppCompatActivity() {
         }
     }
 
-    private suspend fun fetchStoreName(): String? {
+    private suspend fun fetchUserName(): String? {
         val user = fetchUser()
-        return user?.storeName
+        return user?.userName
     }
 
 

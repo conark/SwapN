@@ -180,7 +180,7 @@ class EditUserInformationFragment : Fragment() {
                 }
 
                 is Resource.Success -> {
-                    val storeName = binding.edStoreName.text.toString()
+                    val storeName = binding.edUserName.text.toString()
                     val firstName = binding.edFirstName.text.toString()
                     val lastName = binding.edLastName.text.toString()
                     val email = binding.edEmail.text.toString()
@@ -238,12 +238,12 @@ class EditUserInformationFragment : Fragment() {
             if (isPicked)
                 imageArray?.let { viewModel.uploadProfileImage(it) }
             else {
-                val storeName = binding.edStoreName.text.toString()
+                val userName = binding.edUserName.text.toString()
                 val firstName = binding.edFirstName.text.toString()
                 val lastName = binding.edLastName.text.toString()
                 val email = binding.edEmail.text.toString()
                 val image=""
-                viewModel.updateInformation(storeName,firstName,lastName,email,image)
+                viewModel.updateInformation(userName,firstName,lastName,email,image)
             }
         }
 
@@ -261,7 +261,7 @@ class EditUserInformationFragment : Fragment() {
             Glide.with(requireView()).load(user.imagePath)
                 .error(R.drawable.ic_default_profile_picture).into(imgUser)
 
-            edStoreName.setText(user.storeName)
+            edUserName.setText(user.userName)
             edFirstName.setText(user.firstName)
             edLastName.setText(user.lastName)
             edEmail.setText(FirebaseAuth.getInstance().currentUser?.email)

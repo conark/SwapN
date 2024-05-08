@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.kleine.model.Address
 import com.example.kleine.model.CartProduct
 import com.example.kleine.model.Order
+import com.example.kleine.model.Store
 import com.example.kleine.model.User
 import com.example.kleine.util.Constants.Companion.ADDRESS_COLLECTION
 import com.example.kleine.util.Constants.Companion.BEST_DEALS
@@ -165,10 +166,7 @@ class FirebaseDb {
         userAddressesCollection?.document(documentUid)?.delete()
 
 
-//    CartProductリストからstoreを取得
-//    store毎にCartProductをまとめる(storeをキーとしてHashMapを生成)
-//    store毎にオーダーを生成
-//    Firebaseに保存
+
 
     fun placeOrder(products: List<CartProduct>, address: Address, order: Order) =
         Firebase.firestore.runBatch { batch ->
@@ -399,5 +397,14 @@ class FirebaseDb {
 
 
     fun logout() = Firebase.auth.signOut()
+
+    fun getStores() = storesCollection.get()
+
+
+    fun addStore(name: String, uid: String) {
+        val store = Store(name, uid)
+        storesCollection.document(store.uid).set(store)
+    }
+
 
 }
