@@ -178,7 +178,8 @@ class AddProductActivity :  AppCompatActivity() {
                     hideLoading()
                 }
             }
-            val userName = fetchUserName()
+ //           val userName = fetchUserName()
+            val userId = fetchUserId()
             val product = Product (
                 UUID.randomUUID().toString(),
                 title,
@@ -188,7 +189,8 @@ class AddProductActivity :  AppCompatActivity() {
                 images,
                 if (selectedColors.isEmpty()) null else selectedColors,
                 sizes,
-                userName
+   //             userName
+                userId
 
             )
             firestore.collection("products").add(product).addOnSuccessListener {
@@ -265,6 +267,11 @@ class AddProductActivity :  AppCompatActivity() {
     private suspend fun fetchUserName(): String? {
         val user = fetchUser()
         return user?.userName
+    }
+
+    private fun fetchUserId(): String? {
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        return currentUser?.uid
     }
 
 

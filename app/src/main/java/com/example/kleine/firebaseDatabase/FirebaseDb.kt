@@ -401,9 +401,14 @@ class FirebaseDb {
     fun getStores() = storesCollection.get()
 
 
-    fun addStore(name: String, uid: String) {
+//    fun addStore(name: String, uid: String) {
+//        val store = Store(name, uid)
+//        storesCollection.document(store.uid).set(store)
+//    }
+
+    fun addStore(name: String, uid: String): Task<Void> {
         val store = Store(name, uid)
-        storesCollection.document(store.uid).set(store)
+        return storesCollection.document(store.uid).set(store)
     }
 
 
