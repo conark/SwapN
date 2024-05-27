@@ -198,16 +198,12 @@ class AddProductActivity :  AppCompatActivity() {
 
             firestore.collection("products").add(product).addOnSuccessListener {
                 hideLoading()
-                //もしProduct追加が成功したら、userIdをStoreUidに登録する。
-
-                firestore.collection("stores").add(store)
 //                    // Check if storeUid already exists
                     firestore.collection("stores")
                         .whereEqualTo("storeUid",userId)
                         .get()
                         .addOnSuccessListener { querySnapshot ->
-                            if (querySnapshot.isEmpty) {
-                                // storeid does not exist, so add it
+                            if (querySnapshot.isEmpty) {// storeid does not exist, so add it
                                 val store = Store(
                                     name = storeName,
                                     uid = userId
@@ -221,7 +217,6 @@ class AddProductActivity :  AppCompatActivity() {
                                 Log.d("Info", "Store id already exists")
                             }
                         }
-
             }.addOnFailureListener{
                 hideLoading()
                 Log.e("Error",it.message.toString())
