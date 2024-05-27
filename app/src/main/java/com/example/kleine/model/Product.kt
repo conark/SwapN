@@ -16,7 +16,7 @@ data class Product(
     val images: List<String>,
     val colors: List<Int>?,
     val sizes:List<String>?,
-    val storeName: String? = "",
+    val storeUid: String? = "",
     val orders:Int = 0,
     val offerTime:Date? = null,
     val sizeUnit:String?=null,
@@ -33,9 +33,9 @@ data class Product(
         images: List<String>,
         colors: List<Int>?,
         sizes: List<String>?,
-        storeName: String? = "",
+        storeUid: String? = "",
     ) : this(id,title,description,category,price,images, colors,
-        sizes,storeName,0,null,null,)
+        sizes,storeUid,0,null,null,)
 
 
 

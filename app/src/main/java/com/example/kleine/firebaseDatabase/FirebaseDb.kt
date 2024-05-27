@@ -184,12 +184,12 @@ class FirebaseDb {
             }
 
             val productsMap = HashMap<String, ArrayList<CartProduct>>(stores.size)
-            stores.forEach { storeName ->
+            stores.forEach { storeUid ->
                 val tempList = ArrayList<CartProduct>()
                 products.forEach { cartProduct ->
-                    if (cartProduct.store == storeName)
+                    if (cartProduct.store == storeUid)
                         tempList.add(cartProduct)
-                    productsMap[storeName] = tempList
+                    productsMap[storeUid] = tempList
                 }
             }
 

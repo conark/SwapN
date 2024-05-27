@@ -18,6 +18,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.kleine.R
 import com.example.kleine.databinding.ActivityAddproductBinding
 import com.example.kleine.model.Product
+import com.example.kleine.model.Store
 import com.example.kleine.model.User
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -194,27 +195,22 @@ class AddProductActivity :  AppCompatActivity() {
 
             )
 
-            val auth = FirebaseAuth.getInstance()
-            val currentUser = auth.currentUser
 
-            // currentUserがnullでないことを確認
-            if (currentUser != null) {
-                val userId = currentUser.uid
+            firestore.collection("products").add(product).addOnSuccessListener {
+                hideLoading()
+                //もしProduct追加が成功したら、userIdをStoreUidに登録する。
 
-                firestore.collection("products").add(product).addOnSuccessListener {
-                    hideLoading()
-
-                    // Check if storeName already exists
+                firestore.collection("stores").add(store)
+//                    // Check if storeUid already exists
                     firestore.collection("stores")
-                        .whereEqualTo("name", storeName)
+                        .whereEqualTo("storeUid",userId)
                         .get()
                         .addOnSuccessListener { querySnapshot ->
                             if (querySnapshot.isEmpty) {
-                                // storeName does not exist, so add it
-                                val store = hashMapOf(
-                                    "name" to storeName,
-                                    "uid" to uid,
-                                    // Add userId to the store document
+                                // storeid does not exist, so add it
+                                val store = Store(
+                                    name = storeName,
+                                    uid = userId
                                 )
                                 firestore.collection("stores").add(store).addOnSuccessListener {
                                     Log.d("Success", "Store added successfully")
@@ -222,30 +218,14 @@ class AddProductActivity :  AppCompatActivity() {
                                     Log.e("Error", "Failed to add store: ${e.message}")
                                 }
                             } else {
-                                Log.d("Info", "Store name already exists")
+                                Log.d("Info", "Store id already exists")
                             }
                         }
-                        .addOnFailureListener { e ->
-                            Log.e("Error", "Failed to check store name: ${e.message}")
-                        }
-                }.addOnFailureListener { e ->
-                    hideLoading()
-                    Log.e("Error", e.message.toString())
-                }
-            } else {
-                // Handle the case where the user is not logged in
-                Log.e("Error", "User is not logged in")
+
+            }.addOnFailureListener{
                 hideLoading()
+                Log.e("Error",it.message.toString())
             }
-//            firestore.collection("products").add(product).addOnSuccessListener {
-//                hideLoading()
-//                //もしProduct追加が成功したら、userNameをStoreNameに登録する。
-//                firestore.collection("stores").add(store)
-//                //storeNameがかぶってなかったら登録する
-//            }.addOnFailureListener{
-//                hideLoading()
-//                Log.e("Error",it.message.toString())
-//            }
 
 
         }
@@ -318,10 +298,6 @@ class AddProductActivity :  AppCompatActivity() {
         return currentUser?.uid
     }
 
-    private fun storeName(): String? {
-        val currentUser = FirebaseAuth.getInstance().currentUser
-        return currentUser?.uid
-    }
 
 
 }
