@@ -220,7 +220,7 @@ class FirebaseDb {
                 )
 
                 val storeDocument = storesCollection
-                    .document(store)
+                    .document(it.key)
                     .collection("orders")
                     .document()
 
@@ -399,6 +399,7 @@ class FirebaseDb {
     fun logout() = Firebase.auth.signOut()
 
     fun getStores() = storesCollection.get()
+
 
 
 //    fun addStore(name: String, uid: String) {

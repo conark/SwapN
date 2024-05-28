@@ -157,7 +157,7 @@ class ProductPreviewFragment : Fragment() {
                 val cartProduct = CartProduct(
                     id= product.id!!,
                     name = product.title!!,
-                    store="",
+                    store= product.storeUid!!,
                     image=image,
                     price=product.price!!,
               //      product.newPrice,
