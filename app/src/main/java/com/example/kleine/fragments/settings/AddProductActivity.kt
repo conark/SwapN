@@ -6,6 +6,7 @@ import android.content.Intent.ACTION_GET_CONTENT
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.os.Looper
 import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
@@ -16,6 +17,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.kleine.R
+import com.example.kleine.stripeApi.StripeApi
 import com.example.kleine.databinding.ActivityAddproductBinding
 import com.example.kleine.model.Product
 import com.example.kleine.model.User
@@ -27,14 +29,18 @@ import com.google.firebase.storage.storage
 import com.skydoves.colorpickerview.ColorEnvelope
 import com.skydoves.colorpickerview.ColorPickerDialog
 import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 import java.io.ByteArrayOutputStream
 import java.util.UUID
-
+import kotlin.concurrent.thread
 
 
 class AddProductActivity :  AppCompatActivity() {
@@ -52,9 +58,9 @@ class AddProductActivity :  AppCompatActivity() {
 
 
         binding.buttonColorPicker.setOnClickListener {
-            ColorPickerDialog.Builder (this)
+            ColorPickerDialog.Builder(this)
                 .setTitle("Product colour")
-                .setPositiveButton("Select",object:ColorEnvelopeListener {
+                .setPositiveButton("Select", object : ColorEnvelopeListener {
                     override fun onColorSelected(envelope: ColorEnvelope?, fromUser: Boolean) {
                         envelope?.let {
                             selectedColors.add(it.color)
@@ -62,44 +68,43 @@ class AddProductActivity :  AppCompatActivity() {
                         }
                     }
                 })
-                .setNegativeButton("Cancel"){colorPicker,_ ->
+                .setNegativeButton("Cancel") { colorPicker, _ ->
                     colorPicker.dismiss()
                 }.show()
 
         }
 
         val selectImagesActivityResult =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result ->
-                if(result.resultCode == RESULT_OK){
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == RESULT_OK) {
                     val intent = result.data
 
                     //multiple image select
                     if (intent?.clipData != null) {
-                        val count = intent.clipData?.itemCount ?:0
-                        (0  until  count).forEach {
+                        val count = intent.clipData?.itemCount ?: 0
+                        (0 until count).forEach {
                             val imageUri = intent.clipData?.getItemAt(it)?.uri
                             imageUri?.let {
                                 selectedImages.add(it)
                             }
                         }
-                    }else {
+                    } else {
                         val imageUri = intent?.data
-                        imageUri?.let {selectedImages.add(it)}
+                        imageUri?.let { selectedImages.add(it) }
                     }
                     updateImages()
                 }
 
             }
         binding.buttonImagesPicker.setOnClickListener {
-            val intent = Intent (ACTION_GET_CONTENT)
-            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true)
+            val intent = Intent(ACTION_GET_CONTENT)
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
             intent.type = "image/*"
             selectImagesActivityResult.launch(intent)
         }
 
 
     }
-
 
 
     private fun updateImages() {
@@ -147,15 +152,15 @@ class AddProductActivity :  AppCompatActivity() {
         val price = binding.edPrice.text.toString().trim()
         val offerPercentage = binding.offerPercentage.text.toString().trim()
         val description = binding.edDescription.text.toString().trim()
-        val sizes = getSizeList (binding.edSizes.text.toString().trim())
+        val sizes = getSizeList(binding.edSizes.text.toString().trim())
         val imagesByteArrays = getImagesByteArrays()
         val images = mutableListOf<String>()
 
 
 
 
-        lifecycleScope.launch(Dispatchers.IO){
-            withContext(Dispatchers.Main){
+        lifecycleScope.launch(Dispatchers.IO) {
+            withContext(Dispatchers.Main) {
                 showLoading()
             }
 
@@ -172,15 +177,15 @@ class AddProductActivity :  AppCompatActivity() {
                         }
                     }
                 }.await()
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 e.printStackTrace()
-                withContext(Dispatchers.Main){
+                withContext(Dispatchers.Main) {
                     hideLoading()
                 }
             }
- //           val userName = fetchUserName()
+            //           val userName = fetchUserName()
             val userId = fetchUserId()
-            val product = Product (
+            val product = Product(
                 UUID.randomUUID().toString(),
                 title,
                 if (description.isEmpty()) null else description,
@@ -189,7 +194,7 @@ class AddProductActivity :  AppCompatActivity() {
                 images,
                 if (selectedColors.isEmpty()) null else selectedColors,
                 sizes,
-   //             userName
+                //             userName
                 userId
 
             )
@@ -197,33 +202,17 @@ class AddProductActivity :  AppCompatActivity() {
 
             firestore.collection("products").add(product).addOnSuccessListener {
                 hideLoading()
-//                    // Check if storeUid already exists
-//                    firestore.collection("stores")
-//                        .whereEqualTo("storeUid",userId)
-//                        .get()
-//                        .addOnSuccessListener { querySnapshot ->
-//                            if (querySnapshot.isEmpty) {// storeid does not exist, so add it
-//                                val store = Store(
-//                                    name = storeName,
-//                                    uid = userId
-//                                )
-//                                firestore.collection("stores").add(store).addOnSuccessListener {
-//                                    Log.d("Success", "Store added successfully")
-//                                }.addOnFailureListener { e ->
-//                                    Log.e("Error", "Failed to add store: ${e.message}")
-//                                }
-//                            } else {
-//                                Log.d("Info", "Store id already exists")
-//                            }
-//                        }
-            }.addOnFailureListener{
+                addStripeProduct(product.id, product.title, product.price)
+            }.addOnFailureListener {
+            }.addOnFailureListener {
                 hideLoading()
-                Log.e("Error",it.message.toString())
+                Log.e("Error", it.message.toString())
             }
 
 
         }
     }
+
 
     private fun hideLoading() {
         binding.progressbar.visibility = View.INVISIBLE
@@ -235,10 +224,10 @@ class AddProductActivity :  AppCompatActivity() {
 
     private fun getImagesByteArrays(): List<ByteArray> {
         val imagesByteArray = mutableListOf<ByteArray>()
-        selectedImages.forEach{
+        selectedImages.forEach {
             val stream = ByteArrayOutputStream()
-            val imageBmp = MediaStore.Images.Media.getBitmap(contentResolver,it)
-            if (imageBmp.compress(Bitmap.CompressFormat.JPEG,100,stream)){
+            val imageBmp = MediaStore.Images.Media.getBitmap(contentResolver, it)
+            if (imageBmp.compress(Bitmap.CompressFormat.JPEG, 100, stream)) {
                 imagesByteArray.add(stream.toByteArray())
             }
         }
@@ -273,7 +262,9 @@ class AddProductActivity :  AppCompatActivity() {
         return withContext(Dispatchers.IO) {
             val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid
             if (currentUserUid != null) {
-                val userDocument = FirebaseFirestore.getInstance().collection("users").document(currentUserUid).get().await()
+                val userDocument =
+                    FirebaseFirestore.getInstance().collection("users").document(currentUserUid)
+                        .get().await()
                 val user = userDocument.toObject(User::class.java)
                 user
             } else {
@@ -292,6 +283,31 @@ class AddProductActivity :  AppCompatActivity() {
         return currentUser?.uid
     }
 
+    private fun addStripeProduct(id: String?, name: String?, price: Double) {
+        val moshi = Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .build()
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://api.stripe.com/")
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .build()
+
+
+        thread {
+            try {
+                val service: StripeApi = retrofit.create(StripeApi::class.java)
+                val stripeApiResponse = service.addStripeProduct(id, name, price,).execute().body()
+                    ?: throw IllegalStateException("bodyがnullだよ！")
+
+                android.os.Handler(Looper.getMainLooper()).post {
+                    Log.d("response-stripe", stripeApiResponse.toString())
+                }
+            } catch (e: Exception) {
+                Log.d("response-stripe", "debug $e")
+            }
+        }
+    }
 
 
 }
