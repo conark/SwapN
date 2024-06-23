@@ -21,12 +21,19 @@ import com.example.kleine.adapters.recyclerview.BillingProductsAdapter
 import com.example.kleine.adapters.recyclerview.ShippingAddressesAdapter
 import com.example.kleine.databinding.FragmentBillingBinding
 import com.example.kleine.model.Address
+import com.example.kleine.model.PaymentLinkResponse
 import com.example.kleine.resource.Resource
+import com.example.kleine.stripeApi.StripeApi
 import com.example.kleine.util.Constants.Companion.ORDER_FAILED_FLAG
 import com.example.kleine.util.Constants.Companion.ORDER_SUCCESS_FLAG
 import com.example.kleine.util.Constants.Companion.UPDATE_ADDRESS_FLAG
 import com.example.kleine.viewmodel.billing.BillingViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 
 class BillingFragment : Fragment() {
     val args by navArgs<BillingFragmentArgs>()
@@ -173,6 +180,12 @@ class BillingFragment : Fragment() {
 
 
         btnConfirm.setOnClickListener {
+            btnConfirm.setOnClickListener {
+                val priceId = "price_id" // ここで価格IDを設定
+                createPaymentLink(priceId)
+                alertDialog.dismiss()
+            }
+
             viewModel.placeOrder(args.products!!.products,selectedAddress!!,args.price!!)
             alertDialog.dismiss()
         }
@@ -182,6 +195,38 @@ class BillingFragment : Fragment() {
         }
 
         alertDialog.show()
+    }
+
+    private fun createPaymentLink(priceId: String) {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://api.stripe.com/")
+            .addConverterFactory(MoshiConverterFactory.create())
+            .build()
+
+        val stripeApi = retrofit.create(StripeApi::class.java)
+        val call = stripeApi.createPaymentLink(priceId, 1) // 数量は1で設定
+
+        call.enqueue(object : Callback<PaymentLinkResponse> {
+            override fun onResponse(
+                call: Call<PaymentLinkResponse>,
+                response: Response<PaymentLinkResponse>
+            ) {
+                if (response.isSuccessful) {
+                    val paymentLink = response.body()?.url
+                    paymentLink?.let {
+                        // 支払いリンクをユーザーに表示
+                        Log.d(TAG, "Payment Link: $it")
+                        // ここで支払いリンクをウェブビューに渡して表示するか、ユーザーに通知するコードを追加
+                    }
+                } else {
+                    Log.e(TAG, "Error: ${response.errorBody()?.string()}")
+                }
+            }
+
+            override fun onFailure(call: Call<PaymentLinkResponse>, t: Throwable) {
+                Log.e(TAG, "Failure: ${t.message}")
+            }
+        })
     }
 
     private var selectedAddress: Address? = null

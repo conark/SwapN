@@ -10,3 +10,12 @@ data class Stripe(
 {
     constructor() : this("","",0.0)
 }
+
+
+data class PaymentLinkResponse(
+    val id: String,
+    val objectType: String,
+    val url: String
+) {
+    constructor() : this("", "", "")
+}
