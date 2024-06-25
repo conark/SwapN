@@ -3,8 +3,8 @@ package com.example.kleine.stripeApi
 
 
 import com.example.kleine.BuildConfig
+import com.example.kleine.model.AddProductToStripe
 import com.example.kleine.model.PaymentLinkResponse
-import com.example.kleine.model.Stripe
 import retrofit2.Call
 import retrofit2.http.Headers
 import retrofit2.http.POST
@@ -12,12 +12,14 @@ import retrofit2.http.Query
 
 interface StripeApi {
     @POST("v1/products")
-    @Headers(BuildConfig.STRIPE_API_KEY)
+    @Headers("Authorization: Bearer " +BuildConfig.STRIPE_API_KEY)
     fun addStripeProduct(
-        @Query("q") id: String?,
+        @Query("id") id: String?,
         @Query("name") name: String?,
-        @Query("price") price: Double,
-    ): Call<Stripe>
+        @Query("metadata[price]") price: Double,
+        @Query("default_price_data[currency]") currency: String,
+        @Query("default_price_data[unit_amount]") unitAmount: Int
+    ): Call<AddProductToStripe>
 
     @POST("v1/payment_links")
     @Headers("Authorization: Bearer ${BuildConfig.STRIPE_API_KEY}")

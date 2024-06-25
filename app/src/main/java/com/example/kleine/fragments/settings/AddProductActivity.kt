@@ -17,10 +17,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.kleine.R
-import com.example.kleine.stripeApi.StripeApi
 import com.example.kleine.databinding.ActivityAddproductBinding
 import com.example.kleine.model.Product
 import com.example.kleine.model.User
+import com.example.kleine.stripeApi.StripeApi
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -294,20 +294,47 @@ class AddProductActivity :  AppCompatActivity() {
             .build()
 
 
+//        thread {
+//            try {
+//                val service: StripeApi = retrofit.create(StripeApi::class.java)
+//                val stripeApiResponse = service.addStripeProduct(id, name, price,).execute().body()
+//                    ?: throw IllegalStateException("bodyがnullだよ！")
+//
+//                android.os.Handler(Looper.getMainLooper()).post {
+//                    Log.d("response-stripe", stripeApiResponse.toString())
+//                }
+//            } catch (e: Exception) {
+//                Log.d("response-stripe", "debug $e")
+//            }
         thread {
             try {
                 val service: StripeApi = retrofit.create(StripeApi::class.java)
-                val stripeApiResponse = service.addStripeProduct(id, name, price,).execute().body()
-                    ?: throw IllegalStateException("bodyがnullだよ！")
+                val response = service.addStripeProduct(
+                    id = id,
+                    name = name,
+                    price =price,
+                    currency = "eur",
+                    unitAmount = (price * 100).toInt(),
+                     ).execute()
 
-                android.os.Handler(Looper.getMainLooper()).post {
-                    Log.d("response-stripe", stripeApiResponse.toString())
+                if (response.isSuccessful) {
+                    val stripeApiResponse = response.body()
+                    if (stripeApiResponse != null) {
+                        android.os.Handler(Looper.getMainLooper()).post {
+                            Log.d("response-stripe", stripeApiResponse.toString())
+                        }
+                    } else {
+                        throw IllegalStateException("bodyがnullだよ！")
+                    }
+                } else {
+                    Log.d("response-stripe", "Request failed with response code: ${response.code()}")
+                    Log.d("response-stripe", "Error body: ${response.errorBody()?.string()}")
                 }
             } catch (e: Exception) {
                 Log.d("response-stripe", "debug $e")
             }
         }
+        }
     }
 
 
-}

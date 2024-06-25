@@ -1,6 +1,6 @@
 package com.example.kleine.model
 
-data class Stripe(
+data class AddProductToStripe(
 
     val id:String,
     val name: String,
@@ -9,6 +9,13 @@ data class Stripe(
 
 {
     constructor() : this("","",0.0)
+}
+
+data class DefaultPriceData(
+    val currency: String,
+    val unit_amount: Int
+) {
+    constructor() : this("",0)
 }
 
 
