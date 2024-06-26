@@ -5,10 +5,12 @@ data class AddProductToStripe(
     val id:String,
     val name: String,
     val price:Double,
+    val currency: String,
+    val unit_amount: Int
 )
 
 {
-    constructor() : this("","",0.0)
+    constructor() : this("","",0.0,"",0)
 }
 
 data class DefaultPriceData(
