@@ -6,7 +6,6 @@ import android.content.Intent.ACTION_GET_CONTENT
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.os.Looper
 import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
@@ -14,13 +13,14 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.kleine.R
 import com.example.kleine.databinding.ActivityAddproductBinding
 import com.example.kleine.model.Product
 import com.example.kleine.model.User
-import com.example.kleine.stripeApi.StripeApi
+import com.example.kleine.viewmodel.settings.AddProductViewModel
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -29,18 +29,13 @@ import com.google.firebase.storage.storage
 import com.skydoves.colorpickerview.ColorEnvelope
 import com.skydoves.colorpickerview.ColorPickerDialog
 import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import java.io.ByteArrayOutputStream
 import java.util.UUID
-import kotlin.concurrent.thread
 
 
 class AddProductActivity :  AppCompatActivity() {
@@ -50,6 +45,7 @@ class AddProductActivity :  AppCompatActivity() {
     private var selectedColors = mutableListOf<Int>()
     private var productsStorage = Firebase.storage.reference
     private val firestore = Firebase.firestore
+    private val viewModel: AddProductViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -120,7 +116,7 @@ class AddProductActivity :  AppCompatActivity() {
     }
 
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
         return true
     }
@@ -202,8 +198,8 @@ class AddProductActivity :  AppCompatActivity() {
 
             firestore.collection("products").add(product).addOnSuccessListener {
                 hideLoading()
-                addStripeProduct(product.id, product.title, product.price)
-            }.addOnFailureListener {
+                viewModel.createStripeProduct(product.id, product.title, product.price)
+
             }.addOnFailureListener {
                 hideLoading()
                 Log.e("Error", it.message.toString())
@@ -283,58 +279,7 @@ class AddProductActivity :  AppCompatActivity() {
         return currentUser?.uid
     }
 
-    private fun addStripeProduct(id: String?, name: String?, price: Double) {
-        val moshi = Moshi.Builder()
-            .add(KotlinJsonAdapterFactory())
-            .build()
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.stripe.com/")
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .build()
-
-
-//        thread {
-//            try {
-//                val service: StripeApi = retrofit.create(StripeApi::class.java)
-//                val stripeApiResponse = service.addStripeProduct(id, name, price,).execute().body()
-//                    ?: throw IllegalStateException("bodyがnullだよ！")
-//
-//                android.os.Handler(Looper.getMainLooper()).post {
-//                    Log.d("response-stripe", stripeApiResponse.toString())
-//                }
-//            } catch (e: Exception) {
-//                Log.d("response-stripe", "debug $e")
-//            }
-        thread {
-            try {
-                val service: StripeApi = retrofit.create(StripeApi::class.java)
-                val response = service.addStripeProduct(
-                    id = id,
-                    name = name,
-                    price =price,
-                    currency = "eur",
-                    unitAmount = (price * 100).toInt(),
-                     ).execute()
-
-                if (response.isSuccessful) {
-                    val stripeApiResponse = response.body()
-                    if (stripeApiResponse != null) {
-                        android.os.Handler(Looper.getMainLooper()).post {
-                            Log.d("response-stripe", stripeApiResponse.toString())
-                        }
-                    } else {
-                        throw IllegalStateException("bodyがnullだよ！")
-                    }
-                } else {
-                    Log.d("response-stripe", "Request failed with response code: ${response.code()}")
-                    Log.d("response-stripe", "Error body: ${response.errorBody()?.string()}")
-                }
-            } catch (e: Exception) {
-                Log.d("response-stripe", "debug $e")
-            }
-        }
-        }
     }
 
 
