@@ -16,15 +16,20 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 class AddProductViewModel: ViewModel()  {
-    fun createStripeProduct(id: String?, name: String?, price: Double){
+    fun createStripeProduct(id: String?,name: String?, price: Double){
         viewModelScope.launch {
             //成功したらAddproductを返して失敗したらnullになる
             val addProductResult = addStripeProduct(id,name,price).getOrNull() ?: return@launch
-            val addPriceResult = addStripePrice(id,price).getOrNull() ?: return@launch
+            // プロダクトID取得
+            val product = addProductResult.id
+
+            val addPriceResult = addStripePrice(product,price).getOrNull() ?: return@launch
+            // 価格ID取得
+            val priceId = addPriceResult.id
             val quantity = 1
-            val addPaymentLinkResult = addStripePaymentLink(id,quantity).getOrNull() ?: return@launch
-//            val paymentLinkUrl = addUrlResult.url
-//            Log.d("PaymentLinkURL", paymentLinkUrl)
+            val addPaymentLinkResult = addStripePaymentLink(priceId,quantity,adjustableQuantityEnabled  = true).getOrNull() ?: return@launch
+            val paymentLinkUrl = addPaymentLinkResult.url
+            Log.d("PaymentLinkURL", paymentLinkUrl)
 
         }
     }
@@ -68,7 +73,7 @@ class AddProductViewModel: ViewModel()  {
             Result.failure(Exception("Stripe Product Request fail"))
         }
     }
-    private suspend fun addStripePrice(product: String?, price: Double): Result<AddPriceToStripe>  {
+    private suspend fun addStripePrice(productId: String?, price: Double): Result<AddPriceToStripe>  {
         return withContext(Dispatchers.IO) {
         val moshi = Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
@@ -83,7 +88,8 @@ class AddProductViewModel: ViewModel()  {
         try {
             val service: StripeApi = retrofit.create(StripeApi::class.java)
             val response = service.addStripePrice(
-                product = product,
+
+                product = productId,
                 currency = "eur",
                 unit_amount = (price * 100).toInt()
             ).execute()
@@ -109,7 +115,7 @@ class AddProductViewModel: ViewModel()  {
         }
     }
 
-    private suspend fun addStripePaymentLink(price: String?,quantity:Int): Result<AddPaymentLinkToStripe>  {
+    private suspend fun addStripePaymentLink(priceId: String?,quantity:Int,adjustableQuantityEnabled:Boolean): Result<AddPaymentLinkToStripe>  {
         return withContext(Dispatchers.IO) {
             val moshi = Moshi.Builder()
                 .add(KotlinJsonAdapterFactory())
@@ -124,9 +130,9 @@ class AddProductViewModel: ViewModel()  {
             try {
                 val service: StripeApi = retrofit.create(StripeApi::class.java)
                 val response = service.addStripePaymentLink(
-                    id = price,
-                    quantity = quantity
-
+                    price = priceId,
+                    quantity = quantity ,
+                    adjustableQuantityEnabled =  adjustableQuantityEnabled
                 ).execute()
 
                 if (response.isSuccessful) {

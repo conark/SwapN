@@ -38,8 +38,10 @@ interface StripeApi {
     @POST("v1/payment_links")
     @Headers("Authorization: Bearer ${BuildConfig.STRIPE_API_KEY}")
     fun addStripePaymentLink(
-        @Query("line_items[0]price]") id: String?,
-        @Query("line_items[0][quantity]") quantity: Int
+
+        @Query("line_items[0][price]") price: String?,
+        @Query("line_items[0][quantity]") quantity: Int,
+        @Query("line_items[0][adjustable_quantity][enabled]") adjustableQuantityEnabled: Boolean
     ): Call<AddPaymentLinkToStripe>
 
 

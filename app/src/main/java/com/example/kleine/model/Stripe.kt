@@ -15,16 +15,27 @@ data class Metadata (
 )
 
 data class AddPriceToStripe(
+    val id:String,
     val product:String,
     val currency: String,
     val unit_amount: Int,
 )
 
 
+
 data class AddPaymentLinkToStripe(
-    val lineItems:List<LineItem>
+    val lineItems:List <LineItem>,
+    val url : String
 )
 data class LineItem(
     val price: String?,
-    val quantity: Int
+    val quantity: Int,
+    val adjustable_quantity: Map<String, Adjustable_Quantity>,
+
+)
+
+
+data class Adjustable_Quantity(
+
+    val enabled: Boolean
 )
