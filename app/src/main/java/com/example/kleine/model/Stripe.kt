@@ -24,13 +24,13 @@ data class AddPriceToStripe(
 
 
 data class AddPaymentLinkToStripe(
-    val lineItems:List <LineItem>,
+    val id: String,
     val url : String
 )
 data class LineItem(
     val price: String?,
     val quantity: Int,
-    val adjustable_quantity: Map<String, Adjustable_Quantity>,
+    val adjustable_quantity:  Adjustable_Quantity,
 
 )
 
