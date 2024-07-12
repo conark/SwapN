@@ -20,7 +20,7 @@ data class Product(
     val orders:Int = 0,
     val offerTime:Date? = null,
     val sizeUnit:String?=null,
-
+    val paymentLinkUrl: String? = null
 
 ) : Parcelable
     {
@@ -35,7 +35,7 @@ data class Product(
         sizes: List<String>?,
         storeUid: String? = "",
     ) : this(id,title,description,category,price,images, colors,
-        sizes,storeUid,0,null,null,)
+        sizes,storeUid,0,null,null,null)
 
 
 

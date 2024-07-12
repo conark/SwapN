@@ -7,6 +7,7 @@ import com.example.kleine.model.AddPaymentLinkToStripe
 import com.example.kleine.model.AddPriceToStripe
 import com.example.kleine.model.AddProductToStripe
 import com.example.kleine.stripeApi.StripeApi
+import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Dispatchers
@@ -16,6 +17,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 class AddProductViewModel: ViewModel()  {
+
+    private val firestore = FirebaseFirestore.getInstance()
     fun createStripeProduct(id: String?,name: String?, price: Double){
         viewModelScope.launch {
             //成功したらAddproductを返して失敗したらnullになる
@@ -30,9 +33,33 @@ class AddProductViewModel: ViewModel()  {
             val addPaymentLinkResult = addStripePaymentLink(priceId,quantity,adjustableQuantityEnabled  = true).getOrNull() ?: return@launch
             val paymentLinkUrl = addPaymentLinkResult.url
             Log.d("PaymentLinkURL", paymentLinkUrl)
+            savePaymentLinkToFirebase(id, paymentLinkUrl)
 
         }
     }
+
+    private fun savePaymentLinkToFirebase(id: String?, paymentLinkUrl: String) {
+        if (id == null) return
+
+        val productsCollection = firestore.collection("products")
+        productsCollection.whereEqualTo("id", id).get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    val docId = document.id
+                    productsCollection.document(docId).update("paymentLink", paymentLinkUrl)
+                        .addOnSuccessListener {
+                            Log.d("Firebase", "Payment link successfully added!")
+                        }
+                        .addOnFailureListener { e ->
+                            Log.w("Firebase", "Error adding payment link", e)
+                        }
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.w("Firebase", "Error getting documents: ", e)
+            }
+    }
+
 
     private suspend fun addStripeProduct(id: String?, name: String?, price: Double): Result<AddProductToStripe> {
         return withContext(Dispatchers.IO) {
