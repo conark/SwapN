@@ -161,7 +161,8 @@ class HomeProductsFragment : Fragment() {
                 newPrice= null,
                 quantity=1,
                 color="",
-                size=""
+                size="",
+                paymentLink=""
             )
             viewModel.addProductToCart(cartProduct)
         }

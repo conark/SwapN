@@ -31,14 +31,14 @@ class AddProductViewModel: ViewModel()  {
             val priceId = addPriceResult.id
             val quantity = 1
             val addPaymentLinkResult = addStripePaymentLink(priceId,quantity,adjustableQuantityEnabled  = true).getOrNull() ?: return@launch
-            val paymentLinkUrl = addPaymentLinkResult.url
-            Log.d("PaymentLinkURL", paymentLinkUrl)
-            savePaymentLinkToFirebase(id, paymentLinkUrl)
+            val paymentLink = addPaymentLinkResult.url
+            Log.d("PaymentLink", paymentLink)
+            savePaymentLinkToFirebase(id, paymentLink)
 
         }
     }
 
-    private fun savePaymentLinkToFirebase(id: String?, paymentLinkUrl: String) {
+    private fun savePaymentLinkToFirebase(id: String?, paymentLink: String) {
         if (id == null) return
 
         val productsCollection = firestore.collection("products")
@@ -46,7 +46,7 @@ class AddProductViewModel: ViewModel()  {
             .addOnSuccessListener { documents ->
                 for (document in documents) {
                     val docId = document.id
-                    productsCollection.document(docId).update("paymentLink", paymentLinkUrl)
+                    productsCollection.document(docId).update("paymentLink", paymentLink)
                         .addOnSuccessListener {
                             Log.d("Firebase", "Payment link successfully added!")
                         }

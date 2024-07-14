@@ -9,8 +9,9 @@ data class CartProduct (
     val newPrice:String?,
     val quantity:Int,
     val color:String,
-    val size:String
+    val size:String,
+    val paymentLink: String?
         )
 {
-    constructor() : this("","","","",0.0,"",0,"","")
+    constructor() : this("","","","",0.0,"",0,"","","")
 }

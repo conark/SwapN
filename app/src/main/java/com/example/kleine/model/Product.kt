@@ -20,7 +20,7 @@ data class Product(
     val orders:Int = 0,
     val offerTime:Date? = null,
     val sizeUnit:String?=null,
-    val paymentLinkUrl: String? = null
+    val paymentLink: String? = null
 
 ) : Parcelable
     {

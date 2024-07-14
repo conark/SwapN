@@ -164,10 +164,12 @@ class ProductPreviewFragment : Fragment() {
                     newPrice = null,
                     quantity=1,
                     color=selectedColor,
-                    size=selectedSize
+                    size=selectedSize,
+                    paymentLink=product.paymentLink
                 )
                 viewModel.addProductToCart(cartProduct)
                 setBackgroundResource(R.color.g_black)
+                Log.d("payment Link", product.paymentLink ?: "No payment link available")
             }
         }
     }
