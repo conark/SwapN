@@ -135,10 +135,12 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
 
 
-    // Moshi
+    // Moshi use for api
     def moshi_version = '1.12.0'
     implementation "com.squareup.moshi:moshi:$moshi_version"
     implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
 
-
+   //Chrome Custom Tabs use for payment link
+    implementation 'androidx.browser:browser:1.4.0'
 }
+

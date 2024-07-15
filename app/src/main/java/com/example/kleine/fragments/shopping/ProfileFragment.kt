@@ -59,12 +59,15 @@ class ProfileFragment : Fragment() {
         onLanguageClick()
         onAddProductClick()
         onHelpClick()
+        onSellerPageClick()
 
         observeProfile()
         binding.tvVersionCode.text =
             "${resources.getText(R.string.g_version)} ${BuildConfig.VERSION_NAME}"
 
     }
+
+
 
     private fun onAddProductClick() {
         binding.linearAddProduct.setOnClickListener {
@@ -98,6 +101,9 @@ class ProfileFragment : Fragment() {
             findNavController().navigate(R.id.action_profileFragment_to_allOrdersFragment)
         }
     }
+
+
+
 
     private fun onProfileClick() {
         binding.constraintProfile.setOnClickListener {
@@ -192,5 +198,11 @@ class ProfileFragment : Fragment() {
         bottomNavigation?.visibility = View.VISIBLE
     }
 
+
+    private fun onSellerPageClick() {
+        binding.linearSeller.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_storeHomeFragment)
+        }
+    }
 
 }

@@ -132,5 +132,6 @@
     <string name="g_store_name">User Name / Store Name</string>
     <string name="seller">Seller Page</string>
     <string name="g_pricerange">Price Range</string>
+    <string name="StorePage">Store Page</string>
 
 </resources>

@@ -83,6 +83,13 @@
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right"/>
+        <action
+            android:id="@+id/action_profileFragment_to_storeHomeFragment"
+            app:destination="@id/StoreHomeFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"/>
     </fragment>
     <fragment
         android:id="@+id/cartFragment"
@@ -214,6 +221,11 @@
         android:name="com.example.kleine.fragments.settings.LanguageFragment"
         android:label="fragment_language"
         tools:layout="@layout/fragment_language" />
+    <fragment
+        android:id="@+id/StoreHomeFragment"
+        android:name="com.example.kleine.fragments.store.StoreHomeFragment"
+        android:label="fragment_storeHome"
+        tools:layout="@layout/fragment_store_home" />
     <fragment
         android:id="@+id/helpFragment"
         android:name="com.example.kleine.fragments.settings.HelpFragment"

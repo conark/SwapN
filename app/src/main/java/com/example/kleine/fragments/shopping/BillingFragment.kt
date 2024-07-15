@@ -1,9 +1,10 @@
 package com.example.kleine.fragments.shopping
 
 import android.app.AlertDialog
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -181,6 +183,7 @@ class BillingFragment : Fragment() {
             btnConfirm.setOnClickListener {
                 alertDialog.dismiss()
             }
+
             val cartProduct = args.products?.products?.firstOrNull()
             Log.d("cartProduct", cartProduct.toString())
 
@@ -188,15 +191,17 @@ class BillingFragment : Fragment() {
             Log.d("paymentLink", paymentLinkBtnComfirm)
 
             if (paymentLinkBtnComfirm != "No payment link available") {
-                // Intent to open the link in a web browser
-                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(paymentLinkBtnComfirm))
-                startActivity(browserIntent)
+                val customTabsIntent = CustomTabsIntent.Builder().build()
+                customTabsIntent.launchUrl(requireContext(), Uri.parse(paymentLinkBtnComfirm))
+
             } else {
                 Toast.makeText(requireContext(), "Payment Link not available", Toast.LENGTH_LONG).show()
             }
-
+            Handler(Looper.getMainLooper()).postDelayed({
             viewModel.placeOrder(args.products!!.products,selectedAddress!!,args.price!!)
-            alertDialog.dismiss()
+            }, 1000)
+                alertDialog.dismiss()
+
         }
 
         btnCancel.setOnClickListener {
