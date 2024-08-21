@@ -41,6 +41,7 @@
             android:layout_marginTop="10dp"
             android:src="@drawable/ic_close"
             app:tint="@color/black"
+            android:backgroundTint="@color/white"
             android:scaleType="centerInside"
             />
 
